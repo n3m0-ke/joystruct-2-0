@@ -1,6 +1,8 @@
+import ProjectsBody from "@/components/ProjectsBody"
+
 export default function Projects(){
 
     return (
-        <>Work in progress</>
+        <ProjectsBody />
     )
 }
