@@ -1,8 +1,9 @@
+import StickyNavbar from "@/components/Navbar"
 import ProjectsBody from "@/components/ProjectsBody"
 
 export default function Projects(){
 
     return (
-        <ProjectsBody />
+        <><StickyNavbar /><ProjectsBody /></>
     )
 }
