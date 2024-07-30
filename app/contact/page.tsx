@@ -1,10 +1,11 @@
-import AboutBody from "@/components/AboutBody";
+import ContactBody from "@/components/ContactBody";
 import { Footer } from "@/components/Footer";
 import StickyNavbar from "@/components/Navbar";
 
 export default function About(){
-
     return (
-        <><StickyNavbar /><AboutBody /><Footer /></>
+        <><StickyNavbar /><ContactBody />
+        {/* <Footer /> */}
+        </>
     )
 }

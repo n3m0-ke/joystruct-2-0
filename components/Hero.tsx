@@ -1,8 +1,23 @@
+'use client'
+
+import React from "react";
 import Image from "next/image";
 import { Container } from "./Container";
 import img1 from "@/public/img/benefit-two.png";
+import {
+    Button,
+    Dialog,
+    DialogHeader,
+    DialogBody,
+    DialogFooter,
+} from "@material-tailwind/react";
+import { DemoForm } from "./DemoForm";
+import { SectionTitle } from "./SectionTitle";
 
 export const Hero = () => {
+    const [open, setOpen] = React.useState(false);
+    const handleDemoModal = () => setOpen(!open);
+
     return (
         <>
             <Container className="flex flex-wrap ">
@@ -12,28 +27,49 @@ export const Hero = () => {
                             We create Beautiful Structures
                         </h1>
                         <p className="py-5 text-xl leading-normal text-gray-500 lg:text-xl xl:text-2xl dark:text-gray-300">
-                        Welcome to Joy Structurals. 
-                        We blend technology and expertise in construction. 
-                        Our professionals deliver durable, aesthetically pleasing projects. 
-                        We focus on quality, safety, and efficiency, transforming visions into reality.
+                            Welcome to Joy Structurals.
+                            We blend technology and expertise in construction.
+                            Our professionals deliver durable, aesthetically pleasing projects.
+                            We focus on quality, safety, and efficiency, transforming visions into reality.
                         </p>
 
                         <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
-                            <a
-                                href="#"
-                                target="_blank"
-                                rel="noopener"
-                                className="px-8 py-4 text-lg font-medium text-center text-white bg-zinc-800 rounded-md ">
+                            <Button
+                                onClick={handleDemoModal}
+                                className="px-8 py-4 text-lg font-medium text-center text-white bg-purple-800 rounded-md hover:bg-purple-600 hover:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-purpleCustom focus:ring-opacity-50" 
+                                placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}                            >
                                 Book A Demo
-                            </a>
-                            <a
-                                href="#"
-                                target="_blank"
-                                rel="noopener"
-                                className="flex items-center space-x-2 text-gray-500 dark:text-gray-400">
+                            </Button>
+                            <Dialog 
+                                className="w-full container p-4 mx-auto bg-black bg-opacity-90  border border-goldenrod rounded-2xl"                 
+                                open={open} size="xxl" handler={handleDemoModal} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                                 
-                                <span> Contact Us </span>
-                            </a>
+                                {/* <DialogHeader placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}></DialogHeader> */}
+                                <DialogBody 
+                                className="min-w-max"
+                                placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                                    <SectionTitle
+                                        preTitle="Book for a Demo with us"
+                                        title="Allow us to showcase Our Expertise"
+                                    >
+                                        <DemoForm />
+                                    </SectionTitle>
+                                </DialogBody>
+                                <DialogFooter 
+                                    className="justify-end"
+                                    placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                                    <Button
+                                        variant="text"
+                                        color="red"
+                                        onClick={handleDemoModal}
+                                        className="mr-0 text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+                                        placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}
+                                    >
+                                        <span>Cancel</span>
+                                    </Button>
+                                </DialogFooter>
+                            </Dialog>
+
                         </div>
                     </div>
                 </div>

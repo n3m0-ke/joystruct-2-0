@@ -22,7 +22,7 @@ export default function StickyNavbar() {
         { href: '/', label: 'Home' },
         { href: '/projects', label: 'Projects' },
         { href: '/about', label: 'About' },
-        { href: '#', label: 'Contact Us' },
+        { href: '/contact', label: 'Contact Us' },
       ].map((item) => (
         <Typography
           key={item.href}
@@ -49,7 +49,7 @@ export default function StickyNavbar() {
   );
  
   return (
-    <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-16 py-2 lg:px-24 lg:py-4 border-0 border-b-1 border-goldenrod"
+    <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-16 py-2 lg:px-24 lg:py-4 border-0 border-b-1 border-goldenrod bg-black bg-opacity-70"
     placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} >
       <div className="flex items-center justify-between text-blue-gray-900">
         <Typography
@@ -62,8 +62,8 @@ export default function StickyNavbar() {
             <Image
               src="/img/logo.png"
               alt="JS"
-              width="64"
-              height="64"
+              width="50"
+              height="50"
             />
           </span>
           JoyStructurals

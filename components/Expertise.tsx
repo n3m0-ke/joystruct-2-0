@@ -58,7 +58,7 @@ export const Expertise = (props: Readonly<ExpertiseProps>) => {
 
             <div className="w-full mt-5">
               {data.bullets.map((item, index) => (
-                <ExpertiseSingle key={index} title={item.title} icon={item.icon}>
+                <ExpertiseSingle key={index} title={item.title} icon={item.icon} image={item.image}>
                   {item.desc}
                 </ExpertiseSingle>
               ))}

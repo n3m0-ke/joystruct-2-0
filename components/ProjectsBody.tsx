@@ -1,14 +1,17 @@
+import { ProjectCard } from "./ProjectCard";
 import { SectionTitle } from "./SectionTitle";
 
 export default function ProjectsBody() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-8 backgroundPattern bg-opacity-20">
+    <main className="flex min-h-screen flex-col items-center p-8 backgroundPattern bg-opacity-20">
 
       <SectionTitle
         preTitle="Projects Page"
         title="Feature under development"
       >
       </SectionTitle>
+
+      <ProjectCard />
 
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
         <a
