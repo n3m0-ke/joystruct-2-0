@@ -90,6 +90,7 @@ export function CardsSkeleton() {
     );
 }
 
+
 export function InvoiceSkeleton() {
     return (
         <div className="flex flex-row items-center justify-between border-b border-gray-100 py-4">
@@ -142,3 +143,7 @@ export function LatestInvoicesSkeleton() {
         </div>
     );
 }
+
+
+
+
