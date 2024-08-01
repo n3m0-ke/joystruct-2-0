@@ -8,7 +8,7 @@ import {
 
 export function ProjectCard() {
     return (
-        <Card className="w-full max-w-[48rem] flex-row" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+        <Card className="w-full max-w-[48rem] flex-row bg-opacity-15 text-white hover:bg-opacity-25 hover:border-goldenrod" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
             <CardHeader
                 shadow={false}
                 floated={false}
@@ -22,21 +22,20 @@ export function ProjectCard() {
                 />
             </CardHeader>
             <CardBody placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                <Typography variant="h6" color="gray" className="mb-4 uppercase" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                    startups
+                <Typography variant="h6" color="gray" className="mb-4 uppercase text-purple-700" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                    Project Name
                 </Typography>
                 <Typography variant="h4" color="blue-gray" className="mb-2" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                    Lyft launching cross-platform service this week
+                    A few words about the project
                 </Typography>
-                <Typography color="gray" className="mb-8 font-normal" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                    Like so many organizations these days, Autodesk is a company in
-                    transition. It was until recently a traditional boxed software company
-                    selling licenses. Yet its own business model disruption is only part
-                    of the story
+                <Typography color="gray" className="mb-8 font-normal text-zinc-300" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                    Project description description description description, Project description 
+                    description description description transition. Project description description description description. 
+                    Project description description description description
                 </Typography>
                 <a href="#" className="inline-block">
-                    <Button variant="text" className="flex items-center gap-2" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                        Learn More
+                    <Button variant="text" className="flex items-start gap-2 text-goldenrod" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                        Edit
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
