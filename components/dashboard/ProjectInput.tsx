@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import { db, storage } from '@/firebaseConfig';
+import { db, storage } from '@/firebaseConfigFile';
 import { addDoc, collection } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import LoadingGiff from "@/public/loding.gif";
@@ -90,7 +90,7 @@ const ProjectsInputForm: React.FC = () => {
                             Project details submitted successfully!
                         </div>
                     )}
-                    
+
                 {/* Project Name */}
                 <div className="flex w-full flex-col gap-6 mb-8">
                     <div className="relative">

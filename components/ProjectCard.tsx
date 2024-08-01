@@ -6,7 +6,13 @@ import {
     Button,
 } from "@material-tailwind/react";
 
-export function ProjectCard() {
+interface ProjectCardProps {
+    imageUrl: string;
+    name: string;
+    description: string;
+}
+
+export const ProjectCard: React.FC<ProjectCardProps> = ({ imageUrl, name, description }) => {
     return (
         <Card className="w-full max-w-[48rem] flex-row bg-opacity-15 text-white hover:bg-opacity-25 hover:border-goldenrod" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
             <CardHeader
@@ -16,22 +22,20 @@ export function ProjectCard() {
                 placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}
             >
                 <img
-                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
+                    src={imageUrl}
                     alt="card-image"
                     className="h-full w-full object-cover"
                 />
             </CardHeader>
             <CardBody placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                 <Typography variant="h6" color="gray" className="mb-4 uppercase text-purple-700" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                    Project Name
+                    {name}
                 </Typography>
                 <Typography variant="h4" color="blue-gray" className="mb-2" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                    A few words about the project
+                    By Admin
                 </Typography>
                 <Typography color="gray" className="mb-8 font-normal text-zinc-300" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                    Project description description description description, Project description 
-                    description description description transition. Project description description description description. 
-                    Project description description description description
+                    {description}
                 </Typography>
                 <a href="#" className="inline-block">
                     <Button variant="text" className="flex items-start gap-2 text-goldenrod" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>

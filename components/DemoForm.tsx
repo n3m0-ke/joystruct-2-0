@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {db} from '@/firebaseConfig';
+import {db} from '@/firebaseConfigFile';
 import { collection, addDoc } from 'firebase/firestore';
 
 import { Button, Checkbox, Input, Typography } from "@material-tailwind/react";

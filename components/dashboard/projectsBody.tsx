@@ -1,25 +1,39 @@
 'use client'
 
-import { Textarea } from "@material-tailwind/react";
+import { useEffect, useState } from "react";
 import { Container } from "../Container";
-import { SectionTitle } from "../SectionTitle";
-import { useState } from "react";
-import ImageInput from "./ProjectInput";
-// import ProjectCard from "./ProjectCard";
 import { ProjectCard } from "../ProjectCard";
-
-
-
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { db, storage } from '@/firebaseConfig';
 import ProjectsInputForm from "./ProjectInput";
+import { db } from "@/firebaseConfigFile";
+import { collection, getDocs } from "firebase/firestore";
 
-export default function ProjectsBody() {
+interface Project {
+    id: string;
+    imageUrl: string;
+    name: string;
+    description: string;
+}
+
+export default function ProjectsBody() { 
+    const [projects, setProjects] = useState<Project[]>([]);
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+          const projectsCollection = collection(db, 'projects');
+          const projectSnapshot = await getDocs(projectsCollection);
+          const projectList = projectSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+          })) as Project[];
+          setProjects(projectList);
+        };
     
-    
+        fetchProjects();
+      }, []);  
+
+
     return (
         <main>
-
             <h1 className={`mb-4 text-xl md:text-2xl`}>
                 Projects
             </h1>
@@ -40,12 +54,15 @@ export default function ProjectsBody() {
                 </div>
 
                 <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
-                    <div className="bg-transparent p-6 rounded-lg shadow-lg">
-                        <ProjectCard />
-                    </div>
-                    <div className="bg-transparent p-6 rounded-lg shadow-lg">
-                        {/* <ProjectCard /> */}
-                    </div>
+                    {projects.map((project) => (
+                        <div key={project.id} className="bg-transparent p-6 rounded-lg shadow-lg">
+                            <ProjectCard 
+                                imageUrl={project.imageUrl}
+                                name={project.name}
+                                description={project.description}
+                            />
+                        </div>
+                    ))}
                 </div>
             </Container>
 
