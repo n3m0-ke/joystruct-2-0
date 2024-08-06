@@ -18,11 +18,11 @@
 }
 
 .card .drag-area {
-    height: 150px;
+    /* height: 150px; */
     border-radius: 5px;
-    border: 2px dashed #0084ff;
+    border: none;
     color: #0084ff;
-    background: #e5e5e5;
+    background: transparent;
     user-select: none;
     -webkit-user-select: none;
     margin-top: 10px;

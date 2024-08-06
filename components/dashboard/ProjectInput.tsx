@@ -8,7 +8,7 @@ import LoadingGiff from "@/public/loding.gif";
 import '@/app/projectInput.css';
 import Image from "next/image";
 
-interface Image {
+interface FileData {
     name: string;
     url: string;
 }
@@ -17,36 +17,60 @@ const ProjectsInputForm: React.FC = () => {
     const [projectName, setProjectName] = useState('');
     const [completionYear, setCompletionYear] = useState('');
     const [description, setDescription] = useState('');
-    const [images, setImages] = useState<Image[]>([]);
+    const [images, setImages] = useState<FileData[]>([]);
+    const [video, setVideo] = useState<FileData | null>(null);
     const [loading, setLoading] = useState(false);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const videoInputRef = useRef<HTMLInputElement | null>(null);
 
     const [success, setSuccess] = useState(false);
 
-
-
     const selectFiles = () => {
         fileInputRef.current?.click();
+    };
+
+    const selectVideo = () => {
+        videoInputRef.current?.click();
     };
 
     const onFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         if (!files || files.length === 0) return;
 
-        const newImages: Image[] = Array.from(files).map((file) => ({
+        const newFiles: FileData[] = Array.from(files).map((file) => ({
             name: file.name,
             url: URL.createObjectURL(file)
         }));
 
-        setImages((prevImages) => [...prevImages, ...newImages]);
+        setImages((prevFiles) => [...prevFiles, ...newFiles]);
+    };
+
+    const onVideoSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const files = event.target.files;
+        if (!files || files.length === 0) return;
+
+        const videoFile: FileData = {
+            name: files[0].name,
+            url: URL.createObjectURL(files[0]),
+        };
+
+        setVideo(videoFile);
     };
 
     const deleteImage = (index: number) => {
         setImages((prevImages) => prevImages.filter((_, i) => i !== index));
     };
 
+    const deleteVideo = () => {
+        setVideo(null);
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (images.length === 0) {
+            alert('Please select at least one image.');
+            return;
+        }
         setLoading(true);
 
         try {
@@ -61,11 +85,21 @@ const ProjectsInputForm: React.FC = () => {
                 })
             );
 
+            let videoUrl = '';
+            if (video) {
+                const videoRef = ref(storage, `videos/${video.name}`);
+                const response = await fetch(video.url);
+                const blob = await response.blob();
+                await uploadBytes(videoRef, blob);
+                videoUrl = await getDownloadURL(videoRef);
+            }
+
             const docRef = await addDoc(collection(db, 'projects'), {
                 projectName,
                 completionYear,
                 description,
                 imageUrls,
+                videoUrl,
             });
 
             setSuccess(true);
@@ -75,6 +109,7 @@ const ProjectsInputForm: React.FC = () => {
             setCompletionYear('');
             setDescription('');
             setImages([]);
+            setVideo(null);
         } catch (error) {
             console.error('Error adding document: ', error);
         }
@@ -86,10 +121,10 @@ const ProjectsInputForm: React.FC = () => {
         <form className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4" onSubmit={handleSubmit}>
             <div className="bg-transparent p-6 rounded-lg shadow-lg">
                 {success && (
-                        <div className="mb-4 text-green-500">
-                            Project details submitted successfully!
-                        </div>
-                    )}
+                    <div className="mb-4 text-green-500">
+                        Project details submitted successfully!
+                    </div>
+                )}
 
                 {/* Project Name */}
                 <div className="flex w-full flex-col gap-6 mb-8">
@@ -101,6 +136,7 @@ const ProjectsInputForm: React.FC = () => {
                             onChange={(e) => setProjectName(e.target.value)}
                             className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer"
                             placeholder=" "
+                            required
                         />
                         <label
                             htmlFor="projectName"
@@ -110,6 +146,7 @@ const ProjectsInputForm: React.FC = () => {
                         </label>
                     </div>
                 </div>
+
                 {/* Project Completion */}
                 <div className="flex w-full flex-col gap-6 mb-8">
                     <div className="relative">
@@ -121,6 +158,7 @@ const ProjectsInputForm: React.FC = () => {
                             pattern="\d{4}"
                             className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer"
                             placeholder=" "
+                            required
                         />
                         <label
                             htmlFor="completionYear"
@@ -130,6 +168,7 @@ const ProjectsInputForm: React.FC = () => {
                         </label>
                     </div>
                 </div>
+
                 {/* Description */}
                 <div className="flex flex-row w-full mb-8">
                     <div className="flex w-full flex-col gap-6">
@@ -141,6 +180,7 @@ const ProjectsInputForm: React.FC = () => {
                                 onChange={(e) => setDescription(e.target.value)}
                                 className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer"
                                 placeholder=" "
+                                required
                             />
                             <label
                                 htmlFor="description"
@@ -157,7 +197,7 @@ const ProjectsInputForm: React.FC = () => {
                 <div className="card">
                     <div className="drag-area">
                         <span className="select" role="button" onClick={selectFiles}>
-                            Browse
+                            Browse Project Image(s)
                         </span>
                         <input
                             type="file"
@@ -179,6 +219,31 @@ const ProjectsInputForm: React.FC = () => {
                         ))}
                     </div>
                 </div>
+
+                <div className="card mt-4">
+                    <div className="drag-area">
+                        <span className="select" role="button" onClick={selectVideo}>
+                            Browse Project Video (optional)
+                        </span>
+                        <input
+                            type="file"
+                            name="video"
+                            className="file"
+                            ref={videoInputRef}
+                            onChange={onVideoSelect}
+                        />
+                    </div>
+                    {video && (
+                        <div className="container mt-4">
+                            <div className="image">
+                                <span className="delete" onClick={deleteVideo}>
+                                    &times;
+                                </span>
+                                <video src={video.url} controls className="w-full" />
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
 
             <button
@@ -199,7 +264,6 @@ const ProjectsInputForm: React.FC = () => {
                     {loading ? 'Submitting...' : 'Submit Details'}
                 </span>
             </button>
-
         </form>
     );
 };
