@@ -36,7 +36,7 @@ export function CardsSkeleton() {
     }, []);
 
     if (loading) {
-        return <p>Loading...</p>; // Add your custom loading skeleton here if necessary
+        return <p>Loading Metrics...</p>; // Add your custom loading skeleton here if necessary
     }
 
     return (

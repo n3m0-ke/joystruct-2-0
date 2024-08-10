@@ -123,9 +123,13 @@ const EditProjectDialog: React.FC<EditProjectDialogProps> = ({ project, open, ha
 
     return (
         <Dialog open={open} handler={handleCloseDialog} 
+            className='w-full container p-4 mx-auto bg-black bg-opacity-90  border border-goldenrod rounded-2xl'
+            size='xxl'
             placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} >
             <DialogHeader placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>Edit Project</DialogHeader>
-            <DialogBody divider placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+            <DialogBody divider 
+                className="min-w-max"
+                placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                 <form onSubmit={handleFormSubmit}>
                     <div className="mb-4">
                         <label htmlFor="projectName" className="block text-sm font-medium text-gray-700">
@@ -172,13 +176,13 @@ const EditProjectDialog: React.FC<EditProjectDialogProps> = ({ project, open, ha
                         <label htmlFor="videoUrl" className="block text-sm font-medium text-gray-700">
                             Video URL
                         </label>
-                        <input
+                        {/* <input
                             type="url"
                             id="videoUrl"
                             value={videoUrl}
                             onChange={handleVideoUrlChange}
                             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
+                        /> */}
                         <input
                             type="file"
                             accept="video/*"

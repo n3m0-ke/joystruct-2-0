@@ -70,7 +70,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ id, imageUrls, project
                     <div className="flex">
                         <Button
                             onClick={handleOpen}
-                            disabled
                             className="flex items-start gap-2 text-goldenrod "
                             placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}
                         >
