@@ -5,29 +5,31 @@ import { getAuth, updatePassword } from 'firebase/auth';
 import { CardsSkeleton } from './skeletons';
 
 export default function DashOverviewBody() {
-    const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
 
     const handlePasswordChange = async (e: React.FormEvent) => {
         e.preventDefault();
         const auth = getAuth();
+        const user = auth.currentUser;
 
-        console.log("Within the function")
+        if (!user) {
+            setError('User not authenticated. Please log in again.');
+            return;
+        }
 
         try {
-
-            console.log("Already trying");
-            if (auth.currentUser) {
-                console.log("whatever auth.currentUser returns");
-                await updatePassword(auth.currentUser, newPassword);
-                setMessage('Password updated successfully.');
-            }else{
-                console.log("auth.currentUser is a no no. auth: ", auth);
-            }
-        } catch (error) {
+            await updatePassword(user, newPassword);
+            setMessage('Password updated successfully.');
+            setError('');
+        } catch (error: any) {
             console.error('Password update error:', error);
-            setMessage('Failed to update password.');
+            if (error.code === 'auth/requires-recent-login') {
+                setError('You need to log in again to change your password.');
+            } else {
+                setError('Failed to update password.');
+            }
         }
     };
 
@@ -46,14 +48,6 @@ export default function DashOverviewBody() {
 
                     <input
                         type="password"
-                        id='currentPass'
-                        placeholder="Current Password"
-                        value={currentPassword}
-                        onChange={(e) => setCurrentPassword(e.target.value)}
-                        className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer"
-                    />
-                    <input
-                        type="password"
                         id='newPass'
                         placeholder="New Password"
                         value={newPassword}
@@ -64,7 +58,9 @@ export default function DashOverviewBody() {
                     <button type="submit" className="w-full mt-6 py-2 bg-green-600 text-white rounded">
                         Change Password
                     </button>
-                    {message && <p className="mt-4 text-sm text-red-500">{message}</p>}
+
+                    {message && <p className="mt-4 text-sm text-green-500">{message}</p>}
+                    {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
                 </form>
             </div>
         </main>
