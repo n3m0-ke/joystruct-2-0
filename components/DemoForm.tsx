@@ -41,8 +41,8 @@ export function DemoForm() {
     };
 
     return (
-        <div className="flex flex-col items-end gap-6 min-w-max mx-auto">
-            <form className="mt-8 mx-auto content-center" onSubmit={handleSubmit}>
+        <div className="flex flex-col items-end gap-4 min-w-max mx-auto">
+            <form className="mt-4 mx-auto content-center" onSubmit={handleSubmit}>
                 <div className="mb-1 flex flex-col gap-6">
                     {/* Customer Name */}
                     <div className="flex w-96 flex-col gap-6">
@@ -52,7 +52,7 @@ export function DemoForm() {
                                 id="clientName"
                                 value={formData.clientName}
                                 onChange={handleChange}
-                                className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer" placeholder=" " />
+                                className="block rounded-t-lg px-2.5 pb-2.5 pt-4 w-full text-md bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer" placeholder=" " required/>
                             <label htmlFor="clientName" className="absolute text-sm text-purple-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Name</label>
                         </div>
                     </div>
@@ -67,7 +67,7 @@ export function DemoForm() {
                                     id="companyName"
                                     value={formData.companyName}
                                     onChange={handleChange} 
-                                    className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer" placeholder=" " />
+                                    className="block rounded-t-lg px-2.5 pb-2.5 pt-4 w-full text-md bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer" placeholder=" " required/>
                                 <label htmlFor="companyName" className="absolute text-sm text-purple-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Company Name</label>
                             </div>
                         </div>
@@ -78,7 +78,7 @@ export function DemoForm() {
                                     id="position"
                                     value={formData.position}
                                     onChange={handleChange}
-                                    className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer" placeholder=" " />
+                                    className="block rounded-t-lg px-2.5 pb-2.5 pt-4 w-full text-md bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer" placeholder=" " required/>
                                 <label htmlFor="position" className="absolute text-sm text-purple-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Position</label>
                             </div>
                         </div>
@@ -91,13 +91,13 @@ export function DemoForm() {
                                 <input 
                                     type="text" 
                                     id="email" 
-                                    className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer" placeholder=" " />
+                                    className="block rounded-t-lg px-2.5 pb-2.5 pt-4 w-full text-md bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer" placeholder=" " required/>
                                 <label htmlFor="email" className="absolute text-sm text-purple-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Email</label>
                             </div>
                         </div>
                         <div className="flex w-48 flex-col gap-6">
                             <div className="relative">
-                                <input type="text" id="phone" className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer" placeholder=" " />
+                                <input type="text" id="phone" className="block rounded-t-lg px-2.5 pb-2.5 pt-4 w-full text-md bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer" placeholder=" " required/>
                                 <label htmlFor="phone" className="absolute text-sm text-purple-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Phone</label>
                             </div>
                         </div>
@@ -106,7 +106,7 @@ export function DemoForm() {
                     <div className="flex flex-row w-96">
                         <div className="flex w-96 flex-col gap-6">
                             <div className="relative">
-                                <textarea id="details" rows={4} className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer" placeholder=" " />
+                                <textarea id="details" rows={4} className="block rounded-t-lg px-2.5 pb-2.5 pt-4 w-full text-md bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer" placeholder=" " required/>
                                 <label htmlFor="details" className="absolute text-sm text-purple-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Any Details/Interests</label>
                             </div>
                         </div>
@@ -114,7 +114,7 @@ export function DemoForm() {
                 </div>
 
                 <button type="submit"
-                    className="mt-4 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+                    className="mt-4 w-full focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
                 >
                     Submit Details
                 </button>                

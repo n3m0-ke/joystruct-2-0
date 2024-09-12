@@ -15,7 +15,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // Replace 'admin@example.com' with your actual admin email
-        if (user.email !== 'admin@example.com') {
+        if (user.email !== 'joystructurals@gmail.com') {
           router.push('/login');
         } else {
           setLoading(false);

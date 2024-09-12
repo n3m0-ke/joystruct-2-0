@@ -14,7 +14,7 @@ export default function AboutBody() {
         </div>
 
         <h2 className="max-w-2xl mt-3 text-xl leading-snug tracking-tight text-gray-800 lg:leading-tight lg:text-xl dark:text-white">
-        Feel free to leave general inquiries, customer support questions, partnership opportunity suggestions, and any feedback.
+        Feel free to leave general inquiries, suggestions, and any feedback.
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">

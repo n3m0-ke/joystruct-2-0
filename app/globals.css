@@ -16,6 +16,18 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+.body-section {
+  scroll-margin-top: 80px;
+}
+
+.top-body-section {
+  scroll-margin-top: 100px;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(

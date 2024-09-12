@@ -22,13 +22,6 @@ export default function ProjectsBody() {
     const [loading, setLoading] = useState<boolean>(false);
     const [initialized, setInitialized] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (!initialized) {
-            fetchProjects();
-            setInitialized(true);
-        }
-    }, [initialized]);
-
     const fetchProjects = async (startAfterDoc: QueryDocumentSnapshot<DocumentData> | null = null) => {
         setLoading(true);
 
@@ -66,6 +59,15 @@ export default function ProjectsBody() {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (!initialized) {
+            fetchProjects();
+            setInitialized(true);
+        }
+    }, [initialized]);
+
+    
 
     const updateProject = (updatedProject: Project) => {
         setProjects((prevProjects) =>

@@ -5,6 +5,8 @@ import ProjectsBody from "@/components/ProjectsBody"
 export default function Projects(){
 
     return (
-        <><StickyNavbar /><ProjectsBody /><Footer /></>
+        <><StickyNavbar />
+        {/* <ProjectsBody /> */}
+        <Footer /></>
     )
 }

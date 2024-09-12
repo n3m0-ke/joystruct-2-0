@@ -43,8 +43,8 @@ export default function ProjectsBody() {
     <main className="flex min-h-screen flex-col items-center p-8 backgroundPattern bg-opacity-20">
 
       <SectionTitle
-        preTitle="Projects Page"
-        title="Feature under development"
+        preTitle="Projects"
+        title="Explore Our Projects for Details"
       >
       </SectionTitle>
 
