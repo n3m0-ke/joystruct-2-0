@@ -1,7 +1,4 @@
 import { Hero } from "./Hero";
-import { SectionTitle } from "./SectionTitle";
-import { Expertise } from "./Expertise";
-import {SectionOne, SectionTwo} from "@/components/data";
 
 export default function HomeBody() {
     return(
