@@ -8,7 +8,11 @@ import { ProjectCard } from "./ProjectCardUser";
 import { SectionTitle } from "./SectionTitle";
 import { Container } from "./Container";
 
-import Layout from "react-masonry-list";
+// import Layout from "react-masonry-list";
+import dynamic from "next/dynamic";
+
+const MasonryLayout = dynamic(() => import("react-masonry-list"), { ssr: false });
+
 
 export interface Project {
   completionYear: string;
@@ -50,7 +54,7 @@ export default function ProjectsBody() {
 
       <Container className="min-w-full">
         <div className="w-2/3 mx-auto md:w-2/3 sm:w-full">
-            <Layout
+            <MasonryLayout
             minWidth={100}
             items={projects.map((project) => (
               <ProjectCard key={project.id} project={project} />

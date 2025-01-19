@@ -10,7 +10,7 @@ import { initializeApp, applicationDefault } from 'firebase-admin/app';
 // });
 
 export async function middleware(req: NextRequest) {
-  console.log("Middleware is running well...")
+  // console.log("Middleware is running well...")
 }
 
 
