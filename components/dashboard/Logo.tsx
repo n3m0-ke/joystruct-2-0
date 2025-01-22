@@ -5,7 +5,7 @@ export default function JSLogo(){
     return(
         <div className={`flex flex-row items-center leading-none text-white`}>
             <Image 
-            src={LogoImg} 
+            src="/img/logo.png"
             alt={'JS'}  
             className="h-12 w-12 "
             />

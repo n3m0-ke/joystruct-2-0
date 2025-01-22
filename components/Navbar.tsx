@@ -72,7 +72,7 @@ export default function StickyNavbar() {
         <Typography as="a" href="#" className="mr-4 cursor-pointer py-1.5 font-medium flex items-center"
         placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}  >
           <span>
-            <Image src="/img/logo.png" alt="JS" width="50" height="50" />
+            <img src="/img/logo.png" alt="JS" width="50" height="50" />
           </span>
           JoyStructurals
         </Typography>

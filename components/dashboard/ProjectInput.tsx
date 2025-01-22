@@ -254,7 +254,7 @@ const ProjectsInputForm: React.FC = () => {
                 <span className="flex items-center">
                     {loading ? (
                         <Image
-                            src={LoadingGiff}
+                            src="/loding.gif"
                             alt="loading..."
                             width={32}
                             height={32}

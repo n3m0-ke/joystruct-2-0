@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/navigation'; // Use 'next/navigation' for routing in Next.js 14
 import { app } from '@/firebaseConfigFile';
-import LoadingGiff from "@/public/loding.gif";
+// import LoadingGiff from "@/public/loding.gif";
 import Image from 'next/image';
 
 export default function Login() {
@@ -79,7 +79,7 @@ export default function Login() {
             <span className="flex items-center">
               {loading ? (
                 <Image
-                  src={LoadingGiff}
+                  src="/loding.gif"
                   alt="loading..."
                   width={32}
                   height={32}

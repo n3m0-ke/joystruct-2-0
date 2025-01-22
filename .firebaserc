@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "joystruct-blog"
-  }
+    "default": "joystruct-blog",
+    "staging": "joystruct-blog"
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
 }

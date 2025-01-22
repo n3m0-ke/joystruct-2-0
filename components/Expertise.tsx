@@ -35,8 +35,6 @@ export const Expertise = (props: Readonly<ExpertiseProps>) => {
               height={521}
               alt="Benefits"
               className={"object-cover"}
-              placeholder="blur"
-              blurDataURL={data.image.src}
             />
           </div>
         </div>

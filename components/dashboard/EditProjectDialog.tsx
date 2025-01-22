@@ -233,7 +233,7 @@ const EditProjectDialog: React.FC<EditProjectDialogProps> = ({ project, open, ha
                         disabled={loading}
                         placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}
                     >
-                        {loading ? <Image src={LoadingGiff} alt="loading" /> : 'Save'}
+                        {loading ? <Image src="/loding.gif" alt="loading" /> : 'Save'}
                     </Button>
                 </form>
             </DialogBody>

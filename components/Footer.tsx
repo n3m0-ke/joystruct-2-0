@@ -19,7 +19,7 @@ export function Footer() {
                                 className="flex items-center space-x-2 text-2xl font-medium text-indigo-500 dark:text-gray-100"
                             >
                                 <Image
-                                    src={LogoImage}
+                                    src="/img/logo.png"
                                     alt="JS"
                                     width="32"
                                     height="32"
