@@ -26,11 +26,11 @@ export const Hero = () => {
                         <h1 className="text-4xl font-bold leading-snug tracking-tight text-gray-800 lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight dark:text-white">
                             We create Beautiful Structures
                         </h1>
-                        <p className="py-5 text-xl leading-normal text-gray-500 lg:text-xl xl:text-2xl dark:text-gray-300">
-                            Welcome to Joy Structurals.
-                            We blend technology and expertise in construction.
-                            Our professionals deliver durable, aesthetically pleasing projects.
-                            We focus on quality, safety, and efficiency, transforming visions into reality.
+                        <p className="py-5 text-base leading-normal text-gray-500 lg:text-lg xl:text-xl dark:text-gray-300">
+                            At Joy Structurals, we specialise in innovative structural design and high-quality construction solutions 
+                            that bring visionary projects to life. 
+                            With a team of experienced engineers, architects, and builders, we deliver precision, durability, and efficiency 
+                            in every structure we create.
                         </p>
 
                         <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">

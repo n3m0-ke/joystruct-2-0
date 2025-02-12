@@ -11,7 +11,7 @@ import {
 } from "@heroicons/react/24/solid";
 
 import bannerImg1 from "@/public/img/hero.png";
-import bannerImg2 from "@/public/img/benefit-two.png";
+import CEOImage from "@/public/img/CEOImage.jpeg";
 
 import productionImg from "@/public/img/production.png";
 import schoolImg from "@/public/img/school.png";
@@ -28,20 +28,20 @@ export default function AboutBody() {
     image: bannerImg1,
     bullets: [
       {
-        title: "Educational Institutions",
-        desc: "An explanation",
+        title: "Project Vision",
+        desc: "we are specialists in innovative structural design and high-quality construction solutions, with a team of experienced engineers, architects, and builders, that bring visionary projects to life.",
         icon: <FaceSmileIcon />,
         image: schoolImg
       },
       {
-        title: "Warehouses",
-        desc: "An explanation",
+        title: "All In One",
+        desc: "From concept to completion, we integrate cutting-edge technology, sustainable practices, and industry expertise to build safe, functional, and aesthetically striking structures.",
         icon: <ChartBarSquareIcon />,
         image: warehouseIconImg
       },
       {
         title: "Custom Solutions",
-        desc: "An explanation.",
+        desc: "Driven by integrity and innovation, we collaborate closely with clients, ensuring their ideas are transformed into reality with meticulous attention to detail, whether designing complex infrastructures or executing seamless construction projects.",
         icon: <CursorArrowRaysIcon />,
         image: sketchImg
       },
@@ -49,45 +49,43 @@ export default function AboutBody() {
   }
 
   const SectionTwo = {
-    imPos: "right",
-    title: "Offer more benefits here",
-    desc: "You can use this same layout with a flip image to highlight your rest of the benefits of your product. It can also contain an image or Illustration as above section along with some bullet points.",
-    image: bannerImg2,
+    imgPos: "right",
+    title: "Meet Ranjith Jebasingh",
+    desc: "With nearly two decades of experience in structural design and construction, Ranjith Jebasingh has played a pivotal role in shaping industrial, commercial, and residential projects across India.",
+    image: CEOImage,
     bullets: [
       {
-        title: "Mobile Responsive Template",
-        desc: "Nextly is designed as a mobile first responsive template.",
+        title: "Knowledge Prowess",
+        desc: "Holding a Master’s degree in Structural Engineering from Karunya Deemed University, he has worked with leading firms such as Hitech Structural, Royal Structure, and Kingsway Consultant as a Design Engineer.",
         icon: <DevicePhoneMobileIcon />,
-        image:schoolImg,
+        image: schoolImg,
       },
       {
-        title: "Powered by Next.js & TailwindCSS",
-        desc: "This template is powered by latest technologies and tools.",
+        title: "Project Completion",
+        desc: "Notable projects include a 49m span PEB structure for L.S. Mills, a 60m span rigid frame for Daeseung India Seat Ltd., and the Saveetha Medical College dining block.",
         icon: <AdjustmentsHorizontalIcon />,
         image: schoolImg,
       },
       {
-        title: "Dark & Light Mode",
-        desc: "Nextly comes with a zero-config light & dark mode. ",
+        title: "Committment for sustainability",
+        desc: "With a commitment to precision and innovation, Ranjith Jebasingh continues to deliver structural solutions that combine strength, efficiency, and sustainability.",
         icon: <SunIcon />,
         image: schoolImg
       },
     ],
   }
-    return(
-        <main className="flex min-h-screen flex-col items-center justify-between p-8 backgroundPattern bg-opacity-20">
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-between px-8 pt-8 pb-0 backgroundPattern bg-opacity-20">
 
-            <SectionTitle
-                preTitle="About Us"
-                title=""
-            >
-            </SectionTitle>
+      <SectionTitle
+        preTitle="About Us"
+        title=""
+      >
+      </SectionTitle>
 
-            <Expertise data={SectionTwo} />
+      <Expertise data={SectionOne} />
 
-            <Expertise data={SectionOne} />
-
-
+      <Expertise data={SectionTwo} />
     </main>
-    )
+  )
 }

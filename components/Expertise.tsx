@@ -3,9 +3,9 @@ import React from "react";
 import { Container } from "./Container";
 
 interface ExpertiseProps {
-    imgPos?: "left" | "right";
+    imgPos?: string;
     data: {
-        imgPos?: "left" | "right";
+        imgPos?: string|undefined;
         title: string;
         desc: string;
         image: any;
@@ -20,13 +20,15 @@ interface ExpertiseProps {
 
 export const Expertise = (props: Readonly<ExpertiseProps>) => {
     const { data } = props;
+    
+    console.log(data);
 
     return (
         <Container className="flex flex-wrap mb-20 lg:gap-10 lg:flex-nowrap ">
             
         <div
           className={`flex items-center justify-center w-full lg:w-1/2 ${
-            props.imgPos === "right" ? "lg:order-1" : ""
+            data.imgPos === "right" ? "lg:order-1" : ""
           }`}>
           <div>
             <Image
@@ -66,8 +68,6 @@ export const Expertise = (props: Readonly<ExpertiseProps>) => {
 
     </Container>
     )
-    
-
 }
 
 function ExpertiseSingle(props: any) {
