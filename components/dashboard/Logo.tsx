@@ -8,6 +8,7 @@ export default function JSLogo(){
             src="/img/logo.png"
             alt={'JS'}  
             className="h-12 w-12 "
+            width="150" height="150"
             />
             <p className="text-[32px]">JoyStruct</p>
         </div>

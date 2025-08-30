@@ -41,7 +41,7 @@ export default function ProjectsBody() {
     fetchProjects();
   }, []);
 
-  console.log(projects);
+  // console.log(projects);
 
   return (
     <main className="flex min-h-screen flex-col items-center p-8 backgroundPattern bg-opacity-20">
