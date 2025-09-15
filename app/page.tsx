@@ -19,9 +19,9 @@ export default function Home() {
   return (
     <>
       <StickyNavbar />
-      <section id="home" className="min-h-screen top-body-section"> 
+      <section id="home" className="hero-bg min-h-screen flex items-center pt-20"> 
         {/* Home Section */} 
-        {/* <HomeBody /> */}
+        <HomeBody />
       </section>
       <section id="about" className="min-h-screen body-section"> 
         {/* About Section */} 
