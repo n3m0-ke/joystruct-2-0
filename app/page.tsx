@@ -23,17 +23,17 @@ export default function Home() {
         {/* Home Section */} 
         <HomeBody />
       </section>
-      <section id="about" className="min-h-screen body-section"> 
+      <section id="about" className="py-20 bg-gray-100"> 
         {/* About Section */} 
-        {/* <AboutBody /> */}
+        <AboutBody />
       </section>
-      <section id="projects" className="min-h-screen body-section"> 
-        {/* Projects Section */} 
-        {/* <ProjectsBody /> */}
+      <section id="projects" className="py-20 bg-white"> 
+        {/* Projects Section */}
+        <ProjectsBody />
       </section>
       
-      <section id="contact" className="min-h-screen body-section">
-        {/* <ContactBody /> */}
+      <section id="contact" className="py-20 bg-teal-600 text-white">
+        <ContactBody />
       </section>
       <Footer />
     </>
