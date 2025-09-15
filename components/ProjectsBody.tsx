@@ -29,6 +29,7 @@ export default function ProjectsBody() {
 
   useEffect(() => {
     const fetchProjects = async () => {
+      console.log("fetching projects...");
       const projectsCollection = collection(db, 'projects');
       const projectSnapshot = await getDocs(projectsCollection);
       const projectList = projectSnapshot.docs.map(doc => ({
@@ -41,7 +42,7 @@ export default function ProjectsBody() {
     fetchProjects();
   }, []);
 
-  // console.log(projects);
+  console.log(projects);
 
   return (
     <main className="flex min-h-screen flex-col items-center p-8 backgroundPattern bg-opacity-20">
@@ -59,13 +60,9 @@ export default function ProjectsBody() {
             items={projects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
-
             />
-        </div>
-        
+        </div>        
       </Container>
-
-
 
     </main>
   )

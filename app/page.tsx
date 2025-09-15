@@ -13,19 +13,19 @@ export default function Home() {
       <StickyNavbar />
       <section id="home" className="min-h-screen top-body-section"> 
         {/* Home Section */} 
-        <HomeBody />
+        {/* <HomeBody /> */}
       </section>
       <section id="about" className="min-h-screen body-section"> 
         {/* About Section */} 
-        <AboutBody />
+        {/* <AboutBody /> */}
       </section>
       <section id="projects" className="min-h-screen body-section"> 
         {/* Projects Section */} 
-        <ProjectsBody />
+        {/* <ProjectsBody /> */}
       </section>
       
       <section id="contact" className="min-h-screen body-section">
-        <ContactBody />
+        {/* <ContactBody /> */}
       </section>
       <Footer />
     </>

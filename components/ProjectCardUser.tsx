@@ -9,20 +9,14 @@ export function ProjectCard({ project }: { project: Project }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => setIsHovered(false);
-  const handleOpen = () => {
-    setIsModalOpen(true);
-    setIsHovered(false);
-  };
+  const handleOpen = () => setIsModalOpen(true);
   const handleClose = () => setIsModalOpen(false);
 
   return (
     <div
       className="relative p-4 border border-gray-300 rounded-lg hover:shadow-lg transition-all duration-300 cursor-pointer"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleOpen}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <img
         src={project.imageUrls[0]}
@@ -36,45 +30,38 @@ export function ProjectCard({ project }: { project: Project }) {
           <Button
             onClick={handleOpen}
             className="mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
-            placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+            placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}
+          >
             View Details
           </Button>
         </div>
       )}
 
-      {/* Modal for Detailed View */}
-      <Dialog 
-        open={isModalOpen} 
-        size="xl" 
+      {/* Modal */}
+      <Dialog
+        open={isModalOpen}
         handler={handleClose}
-        // dismiss={{ outsidePointerDown: handleClose }}
+        size="xl"
+        dismiss={{ outsidePress: false }} // prevent accidental close
         animate={{
           mount: { scale: 1, opacity: 1 },
           unmount: { scale: 0.9, opacity: 0 },
-        }} 
-        className="w-full container p-4 bg-black bg-opacity-90  border border-goldenrod rounded-2xl"
-        placeholder={undefined} 
-        onPointerEnterCapture={undefined} 
-        onPointerLeaveCapture={undefined}>
+        }}
+        className="w-full container p-4 bg-black bg-opacity-90 border border-goldenrod rounded-2xl"
+        placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}
+      >
         <DialogHeader placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>{project.projectName}</DialogHeader>
         <DialogBody className="grid grid-cols-1 md:grid-cols-2 gap-6" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-          {/* Left side: Image Gallery */}
           <FeaturedImageGallery images={project.imageUrls} />
 
-          {/* Right side: Project Details */}
           <div className="flex flex-col">
             <Typography variant="h6" color="gray" className="mb-2 uppercase text-purple-700" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
               Project Details
             </Typography>
 
-            {/* Video Section */}
             {project.videoUrl ? (
               <div className="mb-4">
-                <video
-                  controls
-                  className="w-full h-auto rounded-lg"
-                  src={project.videoUrl}
-                />
+                <video controls className="w-full h-auto rounded-lg" src={project.videoUrl} />
               </div>
             ) : (
               <Typography variant="small" color="red" className="mb-4" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
@@ -82,7 +69,6 @@ export function ProjectCard({ project }: { project: Project }) {
               </Typography>
             )}
 
-            {/* Project Info */}
             <div className="flex flex-col">
               <Typography variant="h6" color="gray" className="mb-2" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                 {project.projectName}

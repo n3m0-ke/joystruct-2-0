@@ -1,11 +1,15 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Poppins, Roboto } from 'next/font/google'
 import './globals.css'
+
 
 
 import StickyNavbar from '@/components/Navbar';
 
 const inter = Inter({ subsets: ['latin'] })
+
+const poppins = Poppins({ subsets: ["latin"], weight: ["400","500","600","700"], variable: "--font-heading" });
+const roboto = Roboto({ subsets: ["latin"], weight: ["300","400","500"], variable: "--font-body" });
 
 export const metadata: Metadata = {
   title: 'JoyStructurals Website',
@@ -18,8 +22,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className + ' backgroundPattern'}>
+    <html lang="en" className={`${poppins.variable} ${roboto.variable}`}>
+      <body className="bg-white">
         {children}        
       </body>
     </html>
