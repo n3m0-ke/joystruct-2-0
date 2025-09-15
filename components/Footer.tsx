@@ -8,108 +8,169 @@ export function Footer() {
     const navigation = ["Product", "Features", "Pricing", "Company", "Blog"];
     const legal = ["Terms", "Privacy", "Legal"];
     return (
-        <div className="relative">
-            <Container>
-                <div className="grid max-w-screen-xl grid-cols-1 gap-10 pt-10 mx-auto mt-5 border-t border-gray-100 dark:border-trueGray-700 lg:grid-cols-5">
-                    <div className="lg:col-span-2">
-                        <div>
-                            {" "}
-                            <Link
-                                href="/"
-                                className="flex items-center space-x-2 text-2xl font-medium text-indigo-500 dark:text-gray-100"
-                            >
-                                <Image
-                                    src="/img/logo.png"
-                                    alt="JS"
-                                    width="32"
-                                    height="32"
-                                    className="w-8"
-                                />
-                                <span>JoyStructurals</span>
-                            </Link>
-                        </div>
-
-                        <div className="max-w-md mt-4 text-gray-500 dark:text-gray-400">
-                        We blend technology and expertise in construction. 
-                        Our professionals deliver durable, aesthetically pleasing projects. 
-                        We focus on quality, safety, and efficiency, transforming visions into reality.
-                        </div>
-                        
-                    </div>
-
-                    <div>
-                        <div className="flex flex-wrap w-full -mt-2 -ml-3 lg:ml-0">
-                            {navigation.map((item, index) => (
-                                <Link
-                                    key={index}
-                                    href="/"
-                                    className="w-full px-4 py-2 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700"
-                                >
-                                    {item}
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
-                    <div>
-                        <div className="flex flex-wrap w-full -mt-2 -ml-3 lg:ml-0">
-                            {legal.map((item, index) => (
-                                <Link
-                                    key={index}
-                                    href="/"
-                                    className="w-full px-4 py-2 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700"
-                                >
-                                    {item}
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="">
-                        <div>Follow us</div>
-                        <div className="flex mt-5 space-x-5 text-gray-400 dark:text-gray-500">
-                            <a
-                                href="https://twitter.com/joystructurals"
-                                target="_blank"
-                                rel="noopener"
-                            >
-                                <span className="sr-only">Twitter</span>
-                                <Twitter />
-                            </a>
-                            <a
-                                href="https://facebook.com/joystructurals"
-                                target="_blank"
-                                rel="noopener"
-                            >
-                                <span className="sr-only">Facebook</span>
-                                <Facebook />
-                            </a>
-                            <a
-                                href="https://instagram.com/joystructurals"
-                                target="_blank"
-                                rel="noopener"
-                            >
-                                <span className="sr-only">Instagram</span>
-                                <Instagram />
-                            </a>
-                            <a href="https://linkedin.com/joystructurals" target="_blank" rel="noopener">
-                                <span className="sr-only">Linkedin</span>
-                                <Linkedin />
-                            </a>
-                        </div>
+        <footer className="bg-dark-950 text-white py-12">
+        <div className="container mx-auto px-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div className="mb-8 md:mb-0">
+                    <h3 className="text-2xl font-heading font-bold mb-4 text-teal-500">JoyStructurals</h3>
+                    <p className="text-gray-400 mb-4">Innovative structural design and engineering solutions since 2005.</p>
+                    <div className="flex space-x-4">
+                        <a href="#" className="text-gray-400 hover:text-teal-500 transition duration-300">
+                            <i data-feather="facebook"></i>
+                        </a>
+                        <a href="#" className="text-gray-400 hover:text-teal-500 transition duration-300">
+                            <i data-feather="twitter"></i>
+                        </a>
+                        <a href="#" className="text-gray-400 hover:text-teal-500 transition duration-300">
+                            <i data-feather="linkedin"></i>
+                        </a>
+                        <a href="#" className="text-gray-400 hover:text-teal-500 transition duration-300">
+                            <i data-feather="instagram"></i>
+                        </a>
                     </div>
                 </div>
-
-                <div className="my-10 text-sm text-center text-gray-600 dark:text-gray-400">
-                    Copyright © {new Date().getFullYear()}. Made with ♥ by{" ... "}
-                    <a href="#" target="_blank" rel="noopener">
-                        Sam
-                    </a>{" "}
-                    Illustrations from{" "}
-                    <a href="#" target="_blank" rel="noopener ">
-                        Mike
-                    </a>
+                <div>
+                    <h4 className="text-lg font-heading font-semibold mb-4">Services</h4>
+                    <ul className="space-y-2">
+                        <li><a href="#" className="text-gray-400 hover:text-teal-500 transition duration-300">Structural Engineering</a></li>
+                        <li><a href="#" className="text-gray-400 hover:text-teal-500 transition duration-300">Architectural Design</a></li>
+                        <li><a href="#" className="text-gray-400 hover:text-teal-500 transition duration-300">Construction Management</a></li>
+                        <li><a href="#" className="text-gray-400 hover:text-teal-500 transition duration-300">Structural Analysis</a></li>
+                    </ul>
                 </div>
-            </Container>
+                <div>
+                    <h4 className="text-lg font-heading font-semibold mb-4">Company</h4>
+                    <ul className="space-y-2">
+                        <li><a href="#" className="text-gray-400 hover:text-teal-500 transition duration-300">About Us</a></li>
+                        <li><a href="#" className="text-gray-400 hover:text-teal-500 transition duration-300">Our Team</a></li>
+                        <li><a href="#" className="text-gray-400 hover:text-teal-500 transition duration-300">Projects</a></li>
+                        <li><a href="#" className="text-gray-400 hover:text-teal-500 transition duration-300">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 className="text-lg font-heading font-semibold mb-4">Contact</h4>
+                    <ul className="space-y-2">
+                        <li className="flex items-center text-gray-400">
+                            <i data-feather="map-pin" className="mr-2 text-teal-500"></i> 123 Design Ave, New York
+                        </li>
+                        <li className="flex items-center text-gray-400">
+                            <i data-feather="mail" className="mr-2 text-teal-500"></i> info@structura.com
+                        </li>
+                        <li className="flex items-center text-gray-400">
+                            <i data-feather="phone" className="mr-2 text-teal-500"></i> +1 (555) 123-4567
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div className="border-t border-dark-800 mt-12 pt-8 text-center text-gray-500">
+                <p>Copyright © {new Date().getFullYear()}. Made with ♥ by{" ... "}
+             <a href="#" target="_blank" rel="noopener">Sam</a>{" "}Illustrations from{" "}
+             <a href="#" target="_blank" rel="noopener ">Mike</a></p>
+            </div>
         </div>
+    </footer>
+        // <div className="relative">
+        //     <Container>
+        //         <div className="grid max-w-screen-xl grid-cols-1 gap-10 pt-10 mx-auto mt-5 border-t border-gray-100 dark:border-trueGray-700 lg:grid-cols-5">
+        //             <div className="lg:col-span-2">
+        //                 <div>
+        //                     {" "}
+        //                     <Link
+        //                         href="/"
+        //                         className="flex items-center space-x-2 text-2xl font-medium text-indigo-500 dark:text-gray-100"
+        //                     >
+        //                         <Image
+        //                             src="/img/logo.png"
+        //                             alt="JS"
+        //                             width="32"
+        //                             height="32"
+        //                             className="w-8"
+        //                         />
+        //                         <span>JoyStructurals</span>
+        //                     </Link>
+        //                 </div>
+
+        //                 <div className="max-w-md mt-4 text-gray-500 dark:text-gray-400">
+        //                 We blend technology and expertise in construction. 
+        //                 Our professionals deliver durable, aesthetically pleasing projects. 
+        //                 We focus on quality, safety, and efficiency, transforming visions into reality.
+        //                 </div>
+                        
+        //             </div>
+
+        //             <div>
+        //                 <div className="flex flex-wrap w-full -mt-2 -ml-3 lg:ml-0">
+        //                     {navigation.map((item, index) => (
+        //                         <Link
+        //                             key={index}
+        //                             href="/"
+        //                             className="w-full px-4 py-2 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700"
+        //                         >
+        //                             {item}
+        //                         </Link>
+        //                     ))}
+        //                 </div>
+        //             </div>
+        //             <div>
+        //                 <div className="flex flex-wrap w-full -mt-2 -ml-3 lg:ml-0">
+        //                     {legal.map((item, index) => (
+        //                         <Link
+        //                             key={index}
+        //                             href="/"
+        //                             className="w-full px-4 py-2 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 focus:outline-none dark:focus:bg-trueGray-700"
+        //                         >
+        //                             {item}
+        //                         </Link>
+        //                     ))}
+        //                 </div>
+        //             </div>
+        //             <div className="">
+        //                 <div>Follow us</div>
+        //                 <div className="flex mt-5 space-x-5 text-gray-400 dark:text-gray-500">
+        //                     <a
+        //                         href="https://twitter.com/joystructurals"
+        //                         target="_blank"
+        //                         rel="noopener"
+        //                     >
+        //                         <span className="sr-only">Twitter</span>
+        //                         <Twitter />
+        //                     </a>
+        //                     <a
+        //                         href="https://facebook.com/joystructurals"
+        //                         target="_blank"
+        //                         rel="noopener"
+        //                     >
+        //                         <span className="sr-only">Facebook</span>
+        //                         <Facebook />
+        //                     </a>
+        //                     <a
+        //                         href="https://instagram.com/joystructurals"
+        //                         target="_blank"
+        //                         rel="noopener"
+        //                     >
+        //                         <span className="sr-only">Instagram</span>
+        //                         <Instagram />
+        //                     </a>
+        //                     <a href="https://linkedin.com/joystructurals" target="_blank" rel="noopener">
+        //                         <span className="sr-only">Linkedin</span>
+        //                         <Linkedin />
+        //                     </a>
+        //                 </div>
+        //             </div>
+        //         </div>
+
+        //         <div className="my-10 text-sm text-center text-gray-600 dark:text-gray-400">
+        //             Copyright © {new Date().getFullYear()}. Made with ♥ by{" ... "}
+        //             <a href="#" target="_blank" rel="noopener">
+        //                 Sam
+        //             </a>{" "}
+        //             Illustrations from{" "}
+        //             <a href="#" target="_blank" rel="noopener ">
+        //                 Mike
+        //             </a>
+        //         </div>
+        //     </Container>
+        // </div>
     );
 }
 
