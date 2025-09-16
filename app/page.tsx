@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import HomeBody from '@/components/HomeBody'
 import ProjectsBody from '@/components/ProjectsBody'
@@ -8,14 +10,14 @@ import StickyNavbar from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
 
 import {useEffect} from "react"
-// import AOS from 'aos';
-// import 'aos/dist/aos.css';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 
 export default function Home() {
-  // useEffect(() => {
-  //   AOS.init({duration: 800, easing: "ease-in-out", once: true});
-  // })
+  useEffect(() => {
+    AOS.init({duration: 800, easing: "ease-in-out", once: true});
+  })
   return (
     <>
       <StickyNavbar />
@@ -23,11 +25,11 @@ export default function Home() {
         {/* Home Section */} 
         <HomeBody />
       </section>
-      <section id="about" className="py-20 bg-gray-100"> 
+      <section id="about" className="py-20"> 
         {/* About Section */} 
         <AboutBody />
       </section>
-      <section id="projects" className="py-20 bg-white"> 
+      <section id="projects" className="py-20"> 
         {/* Projects Section */}
         <ProjectsBody />
       </section>
