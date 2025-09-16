@@ -22,8 +22,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${poppins.variable} ${roboto.variable}`}>
-      <body className="bg-white">
+    <html lang="en" className={`${poppins.variable} ${roboto.variable}` + ` ` + `background`}>
+      <body className="bg-black text-white">
         {children}        
       </body>
     </html>
