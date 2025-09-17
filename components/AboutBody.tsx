@@ -1,5 +1,7 @@
 import { SectionTitle } from "./SectionTitle";
 import { Expertise } from "./Expertise";
+import { Dialog } from "@headlessui/react";
+import { useState } from "react"
 
 import {
   FaceSmileIcon,
@@ -8,6 +10,9 @@ import {
   DevicePhoneMobileIcon,
   AdjustmentsHorizontalIcon,
   SunIcon,
+  Square3Stack3DIcon,
+  HomeModernIcon,
+  ClipboardDocumentCheckIcon
 } from "@heroicons/react/24/solid";
 
 import bannerImg1 from "@/public/img/hero.png";
@@ -87,16 +92,16 @@ export default function AboutBody() {
           <div className="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12" data-aos="fade-right">
             <h2 className="text-3xl md:text-2xl font-heading font-normal mb-0 ">A bit of info</h2>
             <div className="w-20 h-1 bg-teal-500 mb-6"></div>
-            <p className="text-gray-300 mb-6">Founded in 2005, Structura has grown from a small engineering firm to a multidisciplinary design powerhouse with projects across three continents.</p>
-            <p className="text-gray-300 mb-8">Our team of 50+ engineers, architects, and construction specialists bring diverse expertise to every project, ensuring innovative solutions grounded in technical excellence.</p>
+            <p className="text-gray-300 mb-6">At Joy Structurals, we specialise in innovative structural design and high-quality construction solutions that bring visionary projects to life. With a team of experienced engineers, architects, and builders, we deliver precision, durability, and efficiency in every structure we create.</p>
+            <p className="text-gray-300 mb-8">Our professionals deliver durable, yet aesthetically pleasing projects. We focus on quality, safety, and efficiency, marrying craftsmanship and innovation to transform your vision into reality.</p>
             <div className="flex space-x-4">
               <div className="text-center">
-                <div className="text-4xl font-heading font-bold text-teal-600">150+</div>
+                <div className="text-4xl font-heading font-bold text-teal-600">10+</div>
                 <div className="text-gray-400">Projects</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-heading font-bold text-teal-600">25</div>
-                <div className="text-gray-400">Awards</div>
+                <div className="text-4xl font-heading font-bold text-teal-600">20</div>
+                <div className="text-gray-400">Clients</div>
               </div>
               <div className="text-center">
                 <div className="text-4xl font-heading font-bold text-teal-600">18</div>
@@ -110,47 +115,77 @@ export default function AboutBody() {
         </div>
       </div>
 
-      <div className="container mx-auto px-6">
-            <div className="text-center mt-16 mb-16" data-aos="fade-up">
-                <h2 className="text-2xl md:text-3xl font-heading font-normal mb-0">Meet The Team</h2>
-                <div className="w-20 h-1 bg-teal-500 mx-auto"></div>
-                <p className="max-w-2xl mx-auto mt-4 text-gray-400">The brilliant minds behind our structural innovations.</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div className="team-member text-center" data-aos="fade-up" data-aos-delay="100">
-                    <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4 shadow-md">
-                        <img src="http://static.photos/people/320x240/1" alt="Team Member" className="w-full h-full object-cover transition duration-500" />
-                    </div>
-                    <h3 className="text-xl font-heading font-semibold">Sarah Johnson</h3>
-                    <p className="text-teal-600 mb-2">Chief Engineer</p>
-                    <p className="text-gray-400 text-sm">15 years experience in seismic design</p>
-                </div>
-                <div className="team-member text-center" data-aos="fade-up" data-aos-delay="200">
-                    <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4 shadow-md">
-                        <img src="http://static.photos/people/320x240/2" alt="Team Member" className="w-full h-full object-cover transition duration-500" />
-                    </div>
-                    <h3 className="text-xl font-heading font-semibold">Michael Chen</h3>
-                    <p className="text-teal-600 mb-2">Lead Architect</p>
-                    <p className="text-gray-400 text-sm">Sustainable design specialist</p>
-                </div>
-                <div className="team-member text-center" data-aos="fade-up" data-aos-delay="300">
-                    <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4 shadow-md">
-                        <img src="http://static.photos/people/320x240/3" alt="Team Member" className="w-full h-full object-cover transition duration-500" />
-                    </div>
-                    <h3 className="text-xl font-heading font-semibold">David Rodriguez</h3>
-                    <p className="text-teal-600 mb-2">Project Manager</p>
-                    <p className="text-gray-400 text-sm">Commercial construction expert</p>
-                </div>
-                <div className="team-member text-center" data-aos="fade-up" data-aos-delay="400">
-                    <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4 shadow-md">
-                        <img src="http://static.photos/people/320x240/4" alt="Team Member" className="w-full h-full object-cover transition duration-500" />
-                    </div>
-                    <h3 className="text-xl font-heading font-semibold">Emma Wilson</h3>
-                    <p className="text-teal-600 mb-2">Structural Analyst</p>
-                    <p className="text-gray-400 text-sm">Computational design specialist</p>
-                </div>
-            </div>
+      <div className="container mx-auto px-6 mt-24">
+        <div className="flex flex-col lg:flex-row items-center">
+          <div className="lg:w-1/2" data-aos="fade-right">
+            <img src="/img/CEOImage.jpeg" alt="Our Office" className="shadow-xl rounded-full aspect-square mx-auto" width={360} />
+          </div>
+          <div className="lg:w-1/2 mb-12 lg:mb-0 lg:pl-12" data-aos="fade-left">
+            <h2 className="text-3xl md:text-2xl font-heading font-normal mb-0 ">Meet Ranjith Jebasingh</h2>
+            <div className="w-20 h-1 bg-teal-500 mb-6"></div>
+            <p className="text-gray-300 mb-6">With nearly two decades of experience in structural design and construction,
+              Ranjith Jebasingh has played a pivotal role in shaping industrial, commercial,
+              and residential projects across India.</p>
+            <ul className="space-y-4">
+              <li className="flex gap-3 items-start">
+                <DevicePhoneMobileIcon className="text-teal-500 w-6 h-6 flex-shrink-0" />
+                <span className="text-gray-300">Holding a Master’s degree in Structural Engineering, worked with Hitech Structural, Royal Structure, and Kingsway Consultant.</span>
+              </li>
+              <li className="flex gap-3 items-start">
+                <AdjustmentsHorizontalIcon className="text-teal-500 w-6 h-6 flex-shrink-0" />
+                <span className="text-gray-300">Notable projects include a 49m span PEB for L.S. Mills and Saveetha Medical College dining block.</span>
+              </li>
+              <li className="flex gap-3 items-start">
+                <SunIcon className="text-teal-500 w-6 h-6 flex-shrink-0" />
+                <span className="text-gray-300">Committed to sustainable, precise, and innovative structural solutions.</span>
+              </li>
+            </ul>
+          </div>
+
         </div>
+      </div>
+
+      <div className="container mx-auto px-6 mt-24">
+        <div className="text-center mt-16 mb-16" data-aos="fade-up">
+          <h2 className="text-2xl md:text-3xl font-heading font-normal mb-0">Meet The Rest of The Team</h2>
+          <div className="w-20 h-1 bg-teal-500 mx-auto"></div>
+          <p className="max-w-2xl mx-auto mt-4 text-gray-400">The brilliant minds behind our structural innovations.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="team-member text-center" data-aos="fade-up" data-aos-delay="100">
+            <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4 shadow-md">
+              <img src="/img/user.jpg" alt="Team Member" className="w-full cursor-pointer h-full object-cover transition duration-500" />
+            </div>
+            <h3 className="text-xl font-heading font-semibold">Fname Lname</h3>
+            <p className="text-teal-600 mb-2">Chief Engineer</p>
+            <p className="text-gray-400 text-sm">15 years experience in seismic design</p>
+          </div>
+          <div className="team-member text-center" data-aos="fade-up" data-aos-delay="200">
+            <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4 shadow-md">
+              <img src="/img/user.jpg" alt="Team Member" className="w-full cursor-pointer h-full object-cover transition duration-500" />
+            </div>
+            <h3 className="text-xl font-heading font-semibold">Fname Lname</h3>
+            <p className="text-teal-600 mb-2">Lead Architect</p>
+            <p className="text-gray-400 text-sm">Sustainable design specialist</p>
+          </div>
+          <div className="team-member text-center" data-aos="fade-up" data-aos-delay="300">
+            <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4 shadow-md">
+              <img src="/img/user.jpg" alt="Team Member" className="w-full cursor-pointer h-full object-cover transition duration-500" />
+            </div>
+            <h3 className="text-xl font-heading font-semibold">Fname Lname</h3>
+            <p className="text-teal-600 mb-2">Project Manager</p>
+            <p className="text-gray-400 text-sm">Commercial construction expert</p>
+          </div>
+          <div className="team-member text-center" data-aos="fade-up" data-aos-delay="400">
+            <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4 shadow-md">
+              <img src="/img/user.jpg" alt="Team Member" className="w-full cursor-pointer h-full object-cover transition duration-500" />
+            </div>
+            <h3 className="text-xl font-heading font-semibold">Fname Lname</h3>
+            <p className="text-teal-600 mb-2">Structural Analyst</p>
+            <p className="text-gray-400 text-sm">Computational design specialist</p>
+          </div>
+        </div>
+      </div>
 
       <div className="text-center mb-16 mt-16" data-aos="fade-up">
         <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">Our Services</h2>
@@ -160,21 +195,24 @@ export default function AboutBody() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="service-card p-8 rounded-lg shadow-md transition duration-500" data-aos="fade-up" data-aos-delay="100">
           <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mb-6">
-            <i data-feather="layers" className="text-teal-600 w-8 h-8"></i>
+            <HomeModernIcon className="text-teal-600 w-8 h-8" />
+            {/* <i data-feather="layers" className="text-teal-600 w-8 h-8"></i> */}
           </div>
           <h3 className="text-xl font-heading font-semibold mb-3" >Structural Engineering</h3>
           <p className="text-gray-400">Precision engineering solutions for residential, commercial, and industrial structures.</p>
         </div>
         <div className="service-card p-8 rounded-lg shadow-md transition duration-500" data-aos="fade-up" data-aos-delay="200">
           <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mb-6">
-            <i data-feather="home" className="text-teal-600 w-8 h-8"></i>
+            <Square3Stack3DIcon className="text-teal-600 w-8 h-8" />
+            {/* <i data-feather="home" className="text-teal-600 w-8 h-8"></i> */}
           </div>
           <h3 className="text-xl font-heading font-semibold mb-3">Architectural Design</h3>
           <p className="text-gray-400">Innovative architectural concepts that blend functionality with aesthetic appeal.</p>
         </div>
         <div className="service-card p-8 rounded-lg shadow-md transition duration-500" data-aos="fade-up" data-aos-delay="300">
           <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mb-6">
-            <i data-feather="tool" className="text-teal-600 w-8 h-8"></i>
+            <ClipboardDocumentCheckIcon className="text-teal-600 w-8 h-8" />
+            {/* <i data-feather="tool" className="text-teal-600 w-8 h-8"></i> */}
           </div>
           <h3 className="text-xl font-heading font-semibold mb-3">Construction Management</h3>
           <p className="text-gray-400">End-to-end project management ensuring quality, safety, and timely delivery.</p>
