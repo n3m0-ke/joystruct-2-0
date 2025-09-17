@@ -5,12 +5,11 @@ export default function JSLogo(){
     return(
         <div className={`flex flex-row items-center leading-none text-white`}>
             <Image 
-            src="/img/logo.png"
+            src="/img/logo-no-bg.png"
             alt={'JS'}  
-            className="h-12 w-12 "
-            width="150" height="150"
+            width="100" height="90"
             />
-            <p className="text-[32px]">JoyStruct</p>
+            <p className="text-[32px]">Admin</p>
         </div>
     )
 }
