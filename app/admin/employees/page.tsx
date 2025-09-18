@@ -1,5 +1,5 @@
-export default function EmployeesPage (){
-    return (
-        <>Employees page</>
-    )
+import EmployeesBody from "@/components/dashboard/EmployeesBody";
+
+export default function Page() {
+  return <EmployeesBody />;
 }
