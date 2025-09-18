@@ -1,255 +1,175 @@
-import React, { useRef, useState, useEffect } from 'react';
+'use client';
+
+import { Dialog } from '@headlessui/react';
+import { useState, useRef } from 'react';
 import { db, storage } from '@/firebaseConfigFile';
 import { doc, updateDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import LoadingGiff from "@/public/loding.gif";
-import '@/app/projectInput.css';
-import Image from "next/image";
-import {
-    Dialog,
-    DialogHeader,
-    DialogBody,
-    DialogFooter,
-    Button,
-    Typography,
-} from "@material-tailwind/react";
-
-import type { Project } from './projectsBody';
-
-interface Image {
-    name: string;
-    url: string;
-}
+import { Project } from './projectsBody';
 
 interface EditProjectDialogProps {
-    project: Project;
-    open: boolean;
-    handleClose: (updatedProject?: Project) => void;
+  project: Project;
+  open: boolean;
+  handleClose: (updatedProject?: Project) => void;
 }
 
-const EditProjectDialog: React.FC<EditProjectDialogProps> = ({ project, open, handleClose }) => {
-    const [projectName, setProjectName] = useState<string>(project.projectName);
-    const [completionYear, setCompletionYear] = useState<string>(project.completionYear);
-    const [description, setDescription] = useState<string>(project.description);
-    const [videoUrl, setVideoUrl] = useState<string | undefined>(project.videoUrl);
-    const [images, setImages] = useState<FileList | null>(null);
-    const [uploadedImages, setUploadedImages] = useState<Image[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-    const videoRef = useRef<HTMLInputElement>(null);
+export default function EditProjectDialog({ project, open, handleClose }: EditProjectDialogProps) {
+  const [projectName, setProjectName] = useState(project.projectName);
+  const [completionYear, setCompletionYear] = useState(project.completionYear);
+  const [description, setDescription] = useState(project.description);
+  const [images, setImages] = useState<string[]>(project.imageUrls || []);
+  const [newImages, setNewImages] = useState<File[]>([]);
+  const [videoUrl, setVideoUrl] = useState(project.videoUrl || '');
+  const [newVideo, setNewVideo] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        if (project.imageUrls) {
-            const initialImages = project.imageUrls.map((url) => ({
-                name: url.substring(url.lastIndexOf('/') + 1),
-                url,
-            }));
-            setUploadedImages(initialImages);
-        }
-    }, [project.imageUrls]);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const videoInputRef = useRef<HTMLInputElement | null>(null);
 
-    const handleProjectNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setProjectName(e.target.value);
-    };
+  // select images
+  const onFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    setNewImages(Array.from(e.target.files));
+  };
 
-    const handleCompletionYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCompletionYear(e.target.value);
-    };
+  // select video
+  const onVideoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    setNewVideo(e.target.files[0]);
+  };
 
-    const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setDescription(e.target.value);
-    };
+  // save updates
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+      const updatedData: Partial<Project> = {
+        projectName,
+        completionYear,
+        description,
+      };
 
-    const handleVideoUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setVideoUrl(e.target.value);
-    };
+      // upload new images if any
+      if (newImages.length > 0) {
+        const urls = await Promise.all(
+          newImages.map(async (file) => {
+            const storageRef = ref(storage, `images/${file.name}`);
+            await uploadBytes(storageRef, file);
+            return await getDownloadURL(storageRef);
+          })
+        );
+        updatedData.imageUrls = urls;
+      } else {
+        updatedData.imageUrls = images;
+      }
 
-    const handleVideoUploadClick = () => {
-        if (videoRef.current) {
-            videoRef.current.click();
-        }
-    };
+      // handle video or YouTube
+      if (newVideo) {
+        const storageRef = ref(storage, `videos/${newVideo.name}`);
+        await uploadBytes(storageRef, newVideo);
+        updatedData.videoUrl = await getDownloadURL(storageRef);
+      } else {
+        updatedData.videoUrl = videoUrl;
+      }
 
-    const handleImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            setImages(e.target.files);
-        }
-    };
+      // update Firestore
+      const projectRef = doc(db, 'projects', project.id);
+      await updateDoc(projectRef, updatedData);
 
-    const handleFormSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+      // return updated object to parent
+      handleClose({
+        ...project,
+        ...updatedData,
+      } as Project);
+    } catch (err) {
+      console.error("Error updating project:", err);
+    }
+    setLoading(false);
+  };
 
-        setLoading(true);
+  return (
+    <Dialog open={open} onClose={() => handleClose()} className="relative z-50">
+      <div className="fixed inset-0 bg-black/60" aria-hidden="true" />
+      <div className="fixed inset-0 flex items-center justify-center p-4">
+        <Dialog.Panel className="w-full max-w-2xl bg-neutral-900 border border-neutral-700 rounded-lg p-6 text-white">
+          <Dialog.Title className="text-xl font-semibold text-teal-400 mb-4">Edit Project</Dialog.Title>
 
-        try {
-            const projectDocRef = doc(db, 'projects', project.id);
+          {/* Form */}
+          <div className="space-y-4">
+            <input
+              type="text"
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+              className="w-full bg-black border-b border-teal-500 text-white p-2 focus:outline-none"
+              placeholder="Project Name"
+            />
 
-            const imageUrls = [...uploadedImages.map(image => image.url)];
-            if (images && images.length > 0) {
-                const imageUploadPromises = Array.from(images).map(async (image) => {
-                    const imageRef = ref(storage, `projectImages/${project.id}/${image.name}`);
-                    await uploadBytes(imageRef, image);
-                    const imageUrl = await getDownloadURL(imageRef);
-                    imageUrls.push(imageUrl);
-                });
+            <input
+              type="text"
+              value={completionYear}
+              onChange={(e) => setCompletionYear(e.target.value)}
+              className="w-full bg-black border-b border-teal-500 text-white p-2 focus:outline-none"
+              placeholder="Completion Year"
+            />
 
-                await Promise.all(imageUploadPromises);
-            }
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={4}
+              className="w-full bg-black border-b border-teal-500 text-white p-2 focus:outline-none"
+              placeholder="Description"
+            />
 
-            const updatedProject = {
-                projectName: projectName || project.projectName, // Ensure project name is not undefined
-                completionYear: completionYear || project.completionYear, // Ensure completion year is not undefined
-                description: description || project.description, // Ensure description is not undefined
-                videoUrl: videoUrl || project.videoUrl, // Ensure video URL is not undefined
-                imageUrls: imageUrls.length > 0 ? imageUrls : project.imageUrls, // Ensure image URLs are not undefined
-            };
+            {/* Existing images */}
+            <div className="flex flex-wrap gap-2">
+              {images.map((img, i) => (
+                <div key={i} className="relative w-20 h-20">
+                  <img src={img} className="w-full h-full object-cover rounded" />
+                  <button
+                    type="button"
+                    className="absolute top-0 right-0 bg-red-600 text-xs text-white px-1"
+                    onClick={() => setImages(images.filter((_, idx) => idx !== i))}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
 
-            await updateDoc(projectDocRef, updatedProject);
+            {/* New image upload */}
+            <input type="file" multiple ref={fileInputRef} onChange={onFileSelect} />
 
-            // Communicate the updated project back to the parent component
-            handleClose({
-                ...project,
-                ...updatedProject,
-            });
-        } catch (error) {
-            console.error("Error updating project: ", error);
-        } finally {
-            setLoading(false);
-        }
-    };
+            {/* Video / YouTube */}
+            <div>
+              <label className="text-teal-400 text-sm">Video or YouTube URL</label>
+              <input
+                type="url"
+                value={videoUrl}
+                onChange={(e) => setVideoUrl(e.target.value)}
+                className="w-full bg-black border-b border-teal-500 text-white p-2 focus:outline-none mt-2"
+                placeholder="YouTube link"
+              />
+              <input type="file" ref={videoInputRef} onChange={onVideoSelect} className="mt-2" />
+            </div>
+          </div>
 
-    const handleCloseDialog = () => {
-        handleClose(); // Close dialog without updating
-    };
-
-    return (
-        <Dialog open={open} handler={handleCloseDialog} 
-            className='w-full container p-4 mx-auto bg-black bg-opacity-90  border border-goldenrod rounded-2xl'
-            size='xxl'
-            placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} >
-            <DialogHeader placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>Edit Project</DialogHeader>
-            <DialogBody divider 
-                className="min-w-max"
-                placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                <form onSubmit={handleFormSubmit}>
-                    <div className="mb-4">
-                        <label htmlFor="projectName" className="block text-sm font-medium text-gray-700">
-                            Project Name
-                        </label>
-                        <input
-                            type="text"
-                            id="projectName"
-                            value={projectName}
-                            onChange={handleProjectNameChange}
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            required
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <label htmlFor="completionYear" className="block text-sm font-medium text-gray-700">
-                            Completion Year
-                        </label>
-                        <input
-                            type="text"
-                            id="completionYear"
-                            value={completionYear}
-                            onChange={handleCompletionYearChange}
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            required
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                            Description
-                        </label>
-                        <textarea
-                            id="description"
-                            value={description}
-                            onChange={handleDescriptionChange}
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            required
-                        ></textarea>
-                    </div>
-
-                    <div className="mb-4">
-                        <label htmlFor="videoUrl" className="block text-sm font-medium text-gray-700">
-                            Video URL
-                        </label>
-                        {/* <input
-                            type="url"
-                            id="videoUrl"
-                            value={videoUrl}
-                            onChange={handleVideoUrlChange}
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        /> */}
-                        <input
-                            type="file"
-                            accept="video/*"
-                            ref={videoRef}
-                            onChange={handleVideoUrlChange}
-                            className="hidden"
-                        />
-                        <Button
-                            color="light-blue"
-                            size="sm"
-                            onClick={handleVideoUploadClick}
-                            placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}
-                        >
-                            Upload Video
-                        </Button>
-                    </div>
-
-                    <div className="mb-4">
-                        <label htmlFor="images" className="block text-sm font-medium text-gray-700">
-                            Project Images
-                        </label>
-                        <input
-                            type="file"
-                            id="images"
-                            multiple
-                            onChange={handleImagesChange}
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                        <div className="mt-4">
-                            {uploadedImages.map((image) => (
-                                <div key={image.url} className="inline-block mr-4 mb-4">
-                                    <Image
-                                        src={image.url}
-                                        alt={image.name}
-                                        width={100}
-                                        height={100}
-                                        className="object-cover rounded"
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    <Button
-                        color="blue"
-                        size="lg"
-                        type="submit"
-                        disabled={loading}
-                        placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}
-                    >
-                        {loading ? <Image src="/loding.gif" alt="loading" /> : 'Save'}
-                    </Button>
-                </form>
-            </DialogBody>
-            <DialogFooter placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                <Button
-                    color="red"
-                    variant="text"
-                    onClick={handleCloseDialog}
-                    className="mr-1"
-                    placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}
-                >
-                    Cancel
-                </Button>
-            </DialogFooter>
-        </Dialog>
-    );
-};
-
-export default EditProjectDialog;
+          {/* Actions */}
+          <div className="flex justify-end gap-3 mt-6">
+            <button
+              onClick={() => handleClose()}
+              className="px-4 py-2 rounded bg-gray-700 hover:bg-gray-600"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              disabled={loading}
+              className="px-4 py-2 rounded bg-teal-600 hover:bg-teal-500"
+            >
+              {loading ? 'Saving...' : 'Save'}
+            </button>
+          </div>
+        </Dialog.Panel>
+      </div>
+    </Dialog>
+  );
+}
