@@ -1,7 +1,9 @@
 import { SectionTitle } from "./SectionTitle";
 import { Expertise } from "./Expertise";
 import { Dialog } from "@headlessui/react";
-import { useState } from "react"
+import { useEffect, useState } from "react";
+import { db } from "@/firebaseConfigFile";
+import { collection, getDocs } from "firebase/firestore";
 
 import {
   FaceSmileIcon,
@@ -23,9 +25,33 @@ import schoolImg from "@/public/img/school.png";
 import sketchImg from "@/public/img/sketch.png";
 import warehouseIconImg from "@/public/img/warehouseIcon.png";
 
-
+interface Employee {
+  id: string;
+  name: string;
+  role: string;
+  experience: string;
+  imageUrl: string;
+}
 
 export default function AboutBody() {
+  const [employees, setEmployees] = useState<Employee[]>([]);
+
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "employees"));
+        const list = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Employee[];
+        setEmployees(list);
+      } catch (err) {
+        console.error("Error fetching employees:", err);
+      }
+    };
+
+    fetchEmployees();
+  }, []);
 
   const SectionOne = {
     title: "Why should you let us work with you",
@@ -145,7 +171,43 @@ export default function AboutBody() {
         </div>
       </div>
 
-      <div className="container mx-auto px-6 mt-24">
+      {employees.length > 0 && (
+        <div className="container mx-auto px-6 mt-24">
+          <div className="text-center mt-16 mb-16" data-aos="fade-up">
+            <h2 className="text-2xl md:text-3xl font-heading font-normal mb-0">
+              Meet The Rest of The Team
+            </h2>
+            <div className="w-20 h-1 bg-teal-500 mx-auto"></div>
+            <p className="max-w-2xl mx-auto mt-4 text-gray-400">
+              The brilliant minds behind our structural innovations.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {employees.map((emp, index) => (
+              <div
+                key={emp.id}
+                className="team-member text-center"
+                data-aos="fade-up"
+                data-aos-delay={(index + 1) * 100}
+              >
+                <div className="rounded-full overflow-hidden w-40 h-40 mx-auto mb-4 shadow-md">
+                  <img
+                    src={emp.imageUrl || "/img/user.jpg"}
+                    alt={emp.name}
+                    className="w-full cursor-pointer h-full object-cover transition duration-500"
+                  />
+                </div>
+                <h3 className="text-xl font-heading font-semibold">{emp.name}</h3>
+                <p className="text-teal-600 mb-2">{emp.role}</p>
+                <p className="text-gray-400 text-sm">{emp.experience}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* <div className="container mx-auto px-6 mt-24">
         <div className="text-center mt-16 mb-16" data-aos="fade-up">
           <h2 className="text-2xl md:text-3xl font-heading font-normal mb-0">Meet The Rest of The Team</h2>
           <div className="w-20 h-1 bg-teal-500 mx-auto"></div>
@@ -185,7 +247,7 @@ export default function AboutBody() {
             <p className="text-gray-400 text-sm">Computational design specialist</p>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="text-center mb-16 mt-16" data-aos="fade-up">
         <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">Our Services</h2>
