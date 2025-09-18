@@ -4,268 +4,210 @@ import React, { useRef, useState } from 'react';
 import { db, storage } from '@/firebaseConfigFile';
 import { addDoc, collection } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import LoadingGiff from "@/public/loding.gif";
-import '@/app/projectInput.css';
 import Image from "next/image";
 
 interface FileData {
-    name: string;
-    url: string;
+  name: string;
+  url: string;
 }
 
+const MAX_IMAGES = 5;
+
 const ProjectsInputForm: React.FC = () => {
-    const [projectName, setProjectName] = useState('');
-    const [completionYear, setCompletionYear] = useState('');
-    const [description, setDescription] = useState('');
-    const [images, setImages] = useState<FileData[]>([]);
-    const [video, setVideo] = useState<FileData | null>(null);
-    const [loading, setLoading] = useState(false);
-    const fileInputRef = useRef<HTMLInputElement | null>(null);
-    const videoInputRef = useRef<HTMLInputElement | null>(null);
+  const [projectName, setProjectName] = useState('');
+  const [completionYear, setCompletionYear] = useState('');
+  const [description, setDescription] = useState('');
+  const [images, setImages] = useState<FileData[]>([]);
+  const [videoFile, setVideoFile] = useState<FileData | null>(null);
+  const [youtubeUrl, setYoutubeUrl] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
-    const [success, setSuccess] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const videoInputRef = useRef<HTMLInputElement | null>(null);
 
-    const selectFiles = () => {
-        fileInputRef.current?.click();
+  // 📷 Select images
+  const onFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+
+    const newFiles: FileData[] = Array.from(files).map((file) => ({
+      name: file.name,
+      url: URL.createObjectURL(file),
+    }));
+
+    if (images.length + newFiles.length > MAX_IMAGES) {
+      alert(`You can only upload up to ${MAX_IMAGES} images.`);
+      return;
+    }
+
+    setImages((prev) => [...prev, ...newFiles]);
+  };
+
+  // 🎥 Select video
+  const onVideoSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+
+    if (youtubeUrl) {
+      alert("Remove YouTube URL before uploading a video file.");
+      return;
+    }
+
+    const videoFile: FileData = {
+      name: files[0].name,
+      url: URL.createObjectURL(files[0]),
     };
 
-    const selectVideo = () => {
-        videoInputRef.current?.click();
-    };
+    setVideoFile(videoFile);
+  };
 
-    const onFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files;
-        if (!files || files.length === 0) return;
+  const handleYoutubeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (videoFile) {
+      alert("Remove uploaded video before adding a YouTube link.");
+      return;
+    }
+    setYoutubeUrl(e.target.value);
+  };
 
-        const newFiles: FileData[] = Array.from(files).map((file) => ({
-            name: file.name,
-            url: URL.createObjectURL(file)
-        }));
+  // ❌ Delete
+  const deleteImage = (i: number) => setImages((prev) => prev.filter((_, idx) => idx !== i));
+  const deleteVideo = () => setVideoFile(null);
 
-        setImages((prevFiles) => [...prevFiles, ...newFiles]);
-    };
+  // ✅ Submit
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-    const onVideoSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files;
-        if (!files || files.length === 0) return;
+    if (images.length < 1) {
+      alert("Please upload at least 1 image.");
+      return;
+    }
 
-        const videoFile: FileData = {
-            name: files[0].name,
-            url: URL.createObjectURL(files[0]),
-        };
+    setLoading(true);
 
-        setVideo(videoFile);
-    };
+    try {
+      // Upload images
+      const imageUrls = await Promise.all(
+        images.map(async (img) => {
+          const imgRef = ref(storage, `images/${img.name}`);
+          const response = await fetch(img.url);
+          const blob = await response.blob();
+          await uploadBytes(imgRef, blob);
+          return await getDownloadURL(imgRef);
+        })
+      );
 
-    const deleteImage = (index: number) => {
-        setImages((prevImages) => prevImages.filter((_, i) => i !== index));
-    };
+      let videoUrl = '';
+      if (videoFile) {
+        const videoRef = ref(storage, `videos/${videoFile.name}`);
+        const response = await fetch(videoFile.url);
+        const blob = await response.blob();
+        await uploadBytes(videoRef, blob);
+        videoUrl = await getDownloadURL(videoRef);
+      } else if (youtubeUrl) {
+        videoUrl = youtubeUrl; // store directly
+      }
 
-    const deleteVideo = () => {
-        setVideo(null);
-    };
+      await addDoc(collection(db, 'projects'), {
+        projectName,
+        completionYear,
+        description,
+        imageUrls,
+        videoUrl,
+      });
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (images.length === 0) {
-            alert('Please select at least one image.');
-            return;
-        }
-        setLoading(true);
+      setSuccess(true);
+      setProjectName('');
+      setCompletionYear('');
+      setDescription('');
+      setImages([]);
+      setVideoFile(null);
+      setYoutubeUrl('');
+    } catch (error) {
+      console.error("Error adding project:", error);
+    }
 
-        try {
-            const imageUrls = await Promise.all(
-                images.map(async (image) => {
-                    const imageRef = ref(storage, `images/${image.name}`);
-                    const response = await fetch(image.url);
-                    const blob = await response.blob();
-                    await uploadBytes(imageRef, blob);
-                    const url = await getDownloadURL(imageRef);
-                    return url;
-                })
-            );
+    setLoading(false);
+  };
 
-            let videoUrl = '';
-            if (video) {
-                const videoRef = ref(storage, `videos/${video.name}`);
-                const response = await fetch(video.url);
-                const blob = await response.blob();
-                await uploadBytes(videoRef, blob);
-                videoUrl = await getDownloadURL(videoRef);
-            }
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {success && <div className="text-green-500">Project added successfully!</div>}
 
-            const docRef = await addDoc(collection(db, 'projects'), {
-                projectName,
-                completionYear,
-                description,
-                imageUrls,
-                videoUrl,
-            });
+      {/* Project Name */}
+      <input
+        type="text"
+        placeholder="Project Name"
+        value={projectName}
+        onChange={(e) => setProjectName(e.target.value)}
+        className="w-full bg-black border-b border-teal-500 text-white p-2 focus:outline-none"
+        required
+      />
 
-            setSuccess(true);
+      {/* Year */}
+      <input
+        type="text"
+        placeholder="Completion Year"
+        value={completionYear}
+        onChange={(e) => setCompletionYear(e.target.value)}
+        pattern="\d{4}"
+        className="w-full bg-black border-b border-teal-500 text-white p-2 focus:outline-none"
+        required
+      />
 
-            console.log('Document written with ID: ', docRef.id);
-            setProjectName('');
-            setCompletionYear('');
-            setDescription('');
-            setImages([]);
-            setVideo(null);
-        } catch (error) {
-            console.error('Error adding document: ', error);
-        }
+      {/* Description */}
+      <textarea
+        placeholder="Description"
+        rows={4}
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        className="w-full bg-black border-b border-teal-500 text-white p-2 focus:outline-none"
+        required
+      />
 
-        setLoading(false);
-    };
-
-    return (
-        <form className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4" onSubmit={handleSubmit}>
-            <div className="bg-transparent p-6 rounded-lg shadow-lg">
-                {success && (
-                    <div className="mb-4 text-green-500">
-                        Project details submitted successfully!
-                    </div>
-                )}
-
-                {/* Project Name */}
-                <div className="flex w-full flex-col gap-6 mb-8">
-                    <div className="relative">
-                        <input
-                            type="text"
-                            id="projectName"
-                            value={projectName}
-                            onChange={(e) => setProjectName(e.target.value)}
-                            className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer"
-                            placeholder=" "
-                            required
-                        />
-                        <label
-                            htmlFor="projectName"
-                            className="absolute text-sm text-purple-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
-                        >
-                            Project Name/Reference
-                        </label>
-                    </div>
-                </div>
-
-                {/* Project Completion */}
-                <div className="flex w-full flex-col gap-6 mb-8">
-                    <div className="relative">
-                        <input
-                            type="text"
-                            id="completionYear"
-                            value={completionYear}
-                            onChange={(e) => setCompletionYear(e.target.value)}
-                            pattern="\d{4}"
-                            className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer"
-                            placeholder=" "
-                            required
-                        />
-                        <label
-                            htmlFor="completionYear"
-                            className="absolute text-sm text-purple-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
-                        >
-                            Year of Completion
-                        </label>
-                    </div>
-                </div>
-
-                {/* Description */}
-                <div className="flex flex-row w-full mb-8">
-                    <div className="flex w-full flex-col gap-6">
-                        <div className="relative">
-                            <textarea
-                                id="description"
-                                rows={4}
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                                className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer"
-                                placeholder=" "
-                                required
-                            />
-                            <label
-                                htmlFor="description"
-                                className="absolute text-sm text-purple-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
-                            >
-                                Description
-                            </label>
-                        </div>
-                    </div>
-                </div>
+      {/* Image Upload */}
+      <div>
+        <label className="text-teal-400">Upload Images ({images.length}/{MAX_IMAGES})</label>
+        <input type="file" multiple ref={fileInputRef} onChange={onFileSelect} />
+        <div className="flex flex-wrap gap-2 mt-2">
+          {images.map((img, i) => (
+            <div key={i} className="relative w-20 h-20">
+              <img src={img.url} className="w-full h-full object-cover rounded" />
+              <button type="button" className="absolute top-0 right-0 bg-red-600 text-white p-1 text-xs" onClick={() => deleteImage(i)}>×</button>
             </div>
+          ))}
+        </div>
+      </div>
 
-            <div className="bg-transparent p-6 rounded-lg shadow-lg">
-                <div className="card">
-                    <div className="drag-area">
-                        <span className="select" role="button" onClick={selectFiles}>
-                            Browse Project Image(s)
-                        </span>
-                        <input
-                            type="file"
-                            name="file"
-                            multiple
-                            className="file"
-                            ref={fileInputRef}
-                            onChange={onFileSelect}
-                        />
-                    </div>
-                    <div className="container">
-                        {images.map((image, index) => (
-                            <div className="image" key={index}>
-                                <span className="delete" onClick={() => deleteImage(index)}>
-                                    &times;
-                                </span>
-                                <img src={image.url} alt={image.name} />
-                            </div>
-                        ))}
-                    </div>
-                </div>
+      {/* Video Upload OR YouTube */}
+      <div>
+        <label className="text-teal-400">Upload Video or Add YouTube URL</label>
+        <input type="file" ref={videoInputRef} onChange={onVideoSelect} />
+        {videoFile && (
+          <div className="relative mt-2">
+            <video src={videoFile.url} controls className="w-full rounded" />
+            <button type="button" className="absolute top-0 right-0 bg-red-600 text-white p-1 text-xs" onClick={deleteVideo}>×</button>
+          </div>
+        )}
 
-                <div className="card mt-4">
-                    <div className="drag-area">
-                        <span className="select" role="button" onClick={selectVideo}>
-                            Browse Project Video (optional)
-                        </span>
-                        <input
-                            type="file"
-                            name="video"
-                            className="file"
-                            ref={videoInputRef}
-                            onChange={onVideoSelect}
-                        />
-                    </div>
-                    {video && (
-                        <div className="container mt-4">
-                            <div className="image">
-                                <span className="delete" onClick={deleteVideo}>
-                                    &times;
-                                </span>
-                                <video src={video.url} controls className="w-full" />
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </div>
+        <input
+          type="url"
+          placeholder="YouTube URL"
+          value={youtubeUrl}
+          onChange={handleYoutubeChange}
+          className="mt-2 w-full bg-black border-b border-teal-500 text-white p-2 focus:outline-none"
+        />
+      </div>
 
-            <button
-                type="submit"
-                className="flex items-center justify-center focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
-                disabled={loading}
-            >
-                <span className="flex items-center">
-                    {loading ? (
-                        <Image
-                            src="/loding.gif"
-                            alt="loading..."
-                            width={32}
-                            height={32}
-                            className="mr-2"
-                        />
-                    ) : null}
-                    {loading ? 'Submitting...' : 'Submit Details'}
-                </span>
-            </button>
-        </form>
-    );
+      <button
+        type="submit"
+        disabled={loading}
+        className="bg-teal-600 hover:bg-teal-500 text-white px-4 py-2 rounded"
+      >
+        {loading ? "Submitting..." : "Submit Project"}
+      </button>
+    </form>
+  );
 };
 
 export default ProjectsInputForm;
