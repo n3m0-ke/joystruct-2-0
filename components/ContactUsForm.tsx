@@ -45,8 +45,8 @@ export default function ContactUsForm(){
                     type="text" 
                     id="clientName" 
                     onChange={handleChange}
-                    className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer" placeholder=" " />
-                  <label htmlFor="clientName" className="absolute text-sm text-purple-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Name</label>
+                    className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-teal-500 appearance-no text-white focus:outline-none focus:ring-0 focus:border-teal-400 focus:ring-teal-400 peer" placeholder=" " />
+                  <label htmlFor="clientName" className="absolute text-sm text-teal-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-teal-300 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Name</label>
                 </div>
               </div>
 
@@ -57,8 +57,8 @@ export default function ContactUsForm(){
                     type="text" 
                     id="email" 
                     onChange={handleChange}
-                    className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer" placeholder=" " />
-                  <label htmlFor="email" className="absolute text-sm text-purple-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Email</label>
+                    className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-teal-500 appearance-no text-white focus:outline-none focus:ring-0 focus:border-teal-400 focus:ring-teal-400 peer" placeholder=" " />
+                  <label htmlFor="email" className="absolute text-sm text-teal-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-teal-300 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Email</label>
                 </div>
               </div>
 
@@ -81,8 +81,8 @@ export default function ContactUsForm(){
                         id="message" 
                         rows={4}
                         onChange={handleChange}
-                        className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-purple-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-purple-600 focus:ring-purple-600 peer" placeholder=" " />
-                    <label htmlFor="message" className="absolute text-sm text-purple-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Message</label>
+                        className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-transparent border-0 border-b-2 border-teal-400 appearance-no text-white focus:outline-none focus:ring-0 focus:border-teal-400 focus:ring-teal-400 peer" placeholder=" " />
+                    <label htmlFor="message" className="absolute text-sm text-teal-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-teal-300 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Message</label>
                   </div>
                 </div>
               </div>
@@ -91,7 +91,7 @@ export default function ContactUsForm(){
               
               <button
                 type="submit"
-                className="w-full px-4 py-2 bg-purple-600 text-white font-bold rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50"
+                className="w-full px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50"
               >
                 Send Message
               </button>
