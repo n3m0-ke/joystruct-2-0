@@ -46,9 +46,7 @@ export default function DashOverviewBody() {
       </div>
 
       {/* Cards section (stats) */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <CardsSkeleton />
-      </div>
 
       {/* Change Password */}
       <div className="w-full rounded-lg bg-neutral-900 border border-neutral-800 p-6">

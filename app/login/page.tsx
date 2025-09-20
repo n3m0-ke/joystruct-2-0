@@ -28,15 +28,9 @@ export default function Login() {
         password
       );
 
-      // 🔑 Get Firebase ID token
       const token = await userCredential.user.getIdToken();
-      console.log('token - ', token);
-
-      // ⚠️ In production, send this to your backend and set an httpOnly cookie!
       document.cookie = `authToken=${token}; path=/;`;
-      console.log('cookie - ', document.cookie);
 
-      // Redirect to admin dashboard
       router.push("/admin");
     } catch (error: any) {
       console.error("Login error:", error);
@@ -49,7 +43,8 @@ export default function Login() {
     <div className="flex items-center justify-center min-h-screen backgroundPattern">
       <form
         onSubmit={handleLogin}
-        className="bg-black bg-opacity-60 rounded-lg p-8 border border-purple-500 shadow-lg w-full max-w-md"
+        autoComplete="off"
+        className="bg-black bg-opacity-60 rounded-lg p-8 border border-teal-500 shadow-lg w-full max-w-md"
       >
         <h2 className="mb-6 text-2xl font-bold text-center text-white">
           Admin Sign In
@@ -70,14 +65,15 @@ export default function Login() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder=" "
+            autoComplete="off"
             required
-            className="peer block w-full rounded-t-lg px-2.5 pb-2.5 pt-5 text-lg bg-transparent border-0 border-b-2 border-purple-400 text-white focus:outline-none focus:ring-0 focus:border-purple-500"
+            className="peer block w-full rounded-t-lg px-2.5 pb-2.5 pt-5 text-lg bg-transparent border-0 border-b-2 border-teal-400 text-white focus:outline-none focus:ring-0 focus:border-teal-500"
           />
           <label
             htmlFor="email"
-            className="absolute text-lg text-purple-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 
+            className="absolute text-lg text-teal-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 
             peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
-            peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500"
+            peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-teal-500"
           >
             Email
           </label>
@@ -91,14 +87,15 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder=" "
+            autoComplete="new-password"
             required
-            className="peer block w-full rounded-t-lg px-2.5 pb-2.5 pt-5 text-lg bg-transparent border-0 border-b-2 border-purple-400 text-white focus:outline-none focus:ring-0 focus:border-purple-500"
+            className="peer block w-full rounded-t-lg px-2.5 pb-2.5 pt-5 text-lg bg-transparent border-0 border-b-2 border-teal-400 text-white focus:outline-none focus:ring-0 focus:border-teal-500"
           />
           <label
             htmlFor="password"
-            className="absolute text-lg text-purple-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 
+            className="absolute text-lg text-teal-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 
             peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
-            peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500"
+            peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-teal-500"
           >
             Password
           </label>
@@ -108,7 +105,7 @@ export default function Login() {
         <button
           type="submit"
           disabled={loading}
-          className="flex items-center justify-center w-full focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-500 font-medium rounded-lg text-lg px-5 py-3 transition"
+          className="flex items-center justify-center w-full focus:outline-none text-white bg-teal-600 hover:bg-teal-700 focus:ring-4 focus:ring-teal-500 font-medium rounded-lg text-lg px-5 py-3 transition"
         >
           {loading ? (
             <>

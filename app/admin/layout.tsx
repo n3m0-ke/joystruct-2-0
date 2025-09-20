@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { app } from "@/firebaseConfigFile";
+import Image from "next/image";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
@@ -26,6 +27,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen text-white">
+        <Image
+          src="/loding.gif"
+          alt="loading..."
+          width={24}
+          height={24}
+          className="mr-2"
+        />
         Checking authentication...
       </div>
     );
