@@ -1,3 +1,5 @@
+'use client'
+
 import { SectionTitle } from "./SectionTitle";
 import { Expertise } from "./Expertise";
 import { Dialog } from "@headlessui/react";
