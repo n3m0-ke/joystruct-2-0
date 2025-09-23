@@ -14,6 +14,7 @@ import {
   QueryDocumentSnapshot,
   DocumentData,
 } from 'firebase/firestore';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 
 export interface Project {
   completionYear: string;
@@ -29,6 +30,7 @@ export default function ProjectsBody() {
   const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot<DocumentData> | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [initialized, setInitialized] = useState<boolean>(false);
+  const [formOpen, setFormOpen] = useState<boolean>(false); // 👈 toggle state
 
   const fetchProjects = async (startAfterDoc: QueryDocumentSnapshot<DocumentData> | null = null) => {
     setLoading(true);
@@ -84,12 +86,28 @@ export default function ProjectsBody() {
         <span className="text-gray-400 text-sm">{projects.length} total</span>
       </div>
 
-      {/* New Project */}
-      <Container className="flex flex-col bg-neutral-900 border border-neutral-800 rounded-lg p-6">
-        <div className="mb-4 text-teal-400 font-semibold uppercase tracking-wide text-sm">
-          Add New Project
+      {/* Add New Project */}
+      <Container className="bg-neutral-900 border border-neutral-800 rounded-lg p-6">
+        <button
+          onClick={() => setFormOpen(!formOpen)}
+          className="flex items-center justify-between w-full text-teal-400 font-semibold uppercase tracking-wide text-sm focus:outline-none"
+        >
+          {formOpen ? 'Hide New Project Form' : 'Add New Project'}
+          {formOpen ? (
+            <ChevronUpIcon className="w-5 h-5 text-teal-400" />
+          ) : (
+            <ChevronDownIcon className="w-5 h-5 text-teal-400" />
+          )}
+        </button>
+
+        {/* Dropdown animation */}
+        <div
+          className={`transition-all duration-300 ease-in-out overflow-hidden ${
+            formOpen ? 'max-h-[1000px] mt-6' : 'max-h-0'
+          }`}
+        >
+          <ProjectsInputForm />
         </div>
-        <ProjectsInputForm />
       </Container>
 
       {/* Edit Projects */}
@@ -98,9 +116,33 @@ export default function ProjectsBody() {
           Edit Projects
         </div>
 
-        {loading && <div className="text-gray-400">Loading...</div>}
+        {loading && (
+          <div className="flex items-center space-x-2 text-gray-400">
+            <svg
+              className="animate-spin h-5 w-5 text-teal-400"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+              />
+            </svg>
+            <span>Loading projects...</span>
+          </div>
+        )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
           {projects.map(project => (
             <div
               key={project.id}
