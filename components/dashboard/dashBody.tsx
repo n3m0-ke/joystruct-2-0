@@ -49,7 +49,7 @@ export default function DashOverviewBody() {
         <CardsSkeleton />
 
       {/* Change Password */}
-      <div className="w-full rounded-lg bg-neutral-900 border border-neutral-800 p-6">
+      {/* <div className="w-full rounded-lg bg-neutral-900 border border-neutral-800 p-6">
         <h2 className="mb-4 text-lg font-semibold text-teal-400">
           Change Password
         </h2>
@@ -74,7 +74,7 @@ export default function DashOverviewBody() {
 
         {message && <p className="mt-4 text-sm text-green-500">{message}</p>}
         {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
-      </div>
+      </div> */}
     </main>
   );
 }

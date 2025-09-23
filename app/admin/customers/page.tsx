@@ -119,9 +119,20 @@ const CustomersPage = () => {
                 </p>
               )}
               <p>
-                <strong className="text-white">Timestamp:</strong>{' '}
-                {selectedRecord?.timestamp}
+                <strong className="text-white">Timestamp:</strong>{" "}
+                {selectedRecord?.timestamp
+                  ? typeof selectedRecord.timestamp === "object" &&
+                    selectedRecord.timestamp !== null &&
+                    "seconds" in selectedRecord.timestamp
+                    ? new Date(
+                      (selectedRecord.timestamp as { seconds: number; nanoseconds: number })
+                        .seconds * 1000
+                    ).toLocaleString()
+                    : String(selectedRecord.timestamp)
+                  : "N/A"}
               </p>
+
+
             </div>
             <div className="mt-6 flex justify-end">
               <button
