@@ -6,7 +6,6 @@ import {
   collection,
   getDocs,
   addDoc,
-  updateDoc,
   deleteDoc,
   doc,
 } from "firebase/firestore";
@@ -16,6 +15,7 @@ import {
   uploadBytes,
   getDownloadURL,
 } from "firebase/storage";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 
 interface Employee {
   id: string;
@@ -37,6 +37,9 @@ export default function EmployeesBody() {
 
   // Modal state
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+
+  // Toggle state for form
+  const [formOpen, setFormOpen] = useState(false);
 
   // Fetch employees
   const fetchEmployees = async () => {
@@ -78,6 +81,7 @@ export default function EmployeesBody() {
       setImageFile(null);
 
       fetchEmployees();
+      setFormOpen(false); // 👈 close form after success
     } catch (error) {
       console.error("Error adding employee: ", error);
     } finally {
@@ -96,50 +100,92 @@ export default function EmployeesBody() {
     <main className="p-6 space-y-8">
       <h1 className="text-2xl font-bold text-teal-400">Employees</h1>
 
-      {/* Add Employee Form */}
-      <form
-        onSubmit={handleAddEmployee}
-        className="bg-neutral-900 border border-neutral-800 p-6 rounded-lg space-y-4"
-      >
-        <h2 className="text-lg font-semibold text-white">Add New Employee</h2>
-        <input
-          type="text"
-          placeholder="Full Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full p-2 bg-neutral-800 text-white rounded"
-          required
-        />
-        <input
-          type="text"
-          placeholder="Role"
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-          className="w-full p-2 bg-neutral-800 text-white rounded"
-          required
-        />
-        <textarea
-          placeholder="Short Bio"
-          value={bio}
-          onChange={(e) => setBio(e.target.value)}
-          className="w-full p-2 bg-neutral-800 text-white rounded"
-          rows={3}
-          required
-        />
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-          className="text-gray-300"
-        />
+      {/* Add Employee Form with Toggle */}
+      <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-6">
         <button
-          type="submit"
-          className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white rounded"
-          disabled={loading}
+          onClick={() => setFormOpen(!formOpen)}
+          className="flex items-center justify-between w-full text-teal-400 font-semibold uppercase tracking-wide text-sm focus:outline-none"
         >
-          {loading ? "Adding..." : "Add Employee"}
+          {formOpen ? "Hide Employee Form" : "Add New Employee"}
+          {formOpen ? (
+            <ChevronUpIcon className="w-5 h-5 text-teal-400" />
+          ) : (
+            <ChevronDownIcon className="w-5 h-5 text-teal-400" />
+          )}
         </button>
-      </form>
+
+        <div
+          className={`transition-all duration-300 ease-in-out overflow-hidden ${
+            formOpen ? "max-h-[1000px] mt-6" : "max-h-0"
+          }`}
+        >
+          <form onSubmit={handleAddEmployee} className="space-y-4">
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full p-2 bg-neutral-800 text-white rounded"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Role"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="w-full p-2 bg-neutral-800 text-white rounded"
+              required
+            />
+            <textarea
+              placeholder="Short Bio"
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              className="w-full p-2 bg-neutral-800 text-white rounded"
+              rows={3}
+              required
+            />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+              className="text-gray-300"
+            />
+            <button
+              type="submit"
+              className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white rounded flex items-center justify-center"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <svg
+                    className="animate-spin h-5 w-5 mr-2 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    />
+                  </svg>
+                  Adding...
+                </>
+              ) : (
+                "Add Employee"
+              )}
+            </button>
+          </form>
+        </div>
+      </div>
 
       {/* Employee List */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
