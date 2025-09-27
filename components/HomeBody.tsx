@@ -48,7 +48,7 @@ export default function HomeBody() {
 
         {/* Panel */}
         <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel className="w-full max-w-2xl rounded-xl bg-neutral-900 border border-teal-600 p-6 shadow-xl text-white">
+          <Dialog.Panel className="w-full max-w-2xl max-h-screen overflow-y-auto rounded-xl bg-neutral-900 border border-teal-600 p-6 shadow-xl text-white">
             <Dialog.Title className="text-2xl font-heading font-semibold text-teal-400 mb-4">
               Book a Demo
             </Dialog.Title>

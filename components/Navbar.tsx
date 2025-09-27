@@ -69,13 +69,24 @@ export default function StickyNavbar() {
     <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-16 py-2 lg:px-24 lg:py-4 bg-black bg-opacity-70 border-0" 
     placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}    >
       <div className="flex items-center justify-between text-blue-gray-900">
-        <Typography as="a" href="#" className="mr-4 cursor-pointer py-1.5 font-bold text-4xl flex items-center text-teal-600"
-        placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}  >
-          <span>
-            <img src="/img/logo-no-bg.png" alt="JS" width="100" height="100" />
-          </span>
-          Joy Structurals
-        </Typography>
+        <Typography
+  as="a"
+  href="#"
+  className="mr-4 cursor-pointer py-1.5 font-bold text-2xl md:text-3xl lg:text-4xl flex items-center gap-2 text-teal-600"
+  placeholder={undefined}
+  onPointerEnterCapture={undefined}
+  onPointerLeaveCapture={undefined}
+>
+  <span className="flex-shrink-0">
+    <img
+      src="/img/logo-no-bg.png"
+      alt="JS"
+      className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16"
+    />
+  </span>
+  Joy Structurals
+</Typography>
+
         <div className="flex items-center gap-4">
           <div className="mr-4 hidden lg:block">{navList}</div>
           <IconButton
